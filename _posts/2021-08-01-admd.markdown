@@ -1,0 +1,25 @@
+---
+layout: post
+title:  "Learning Motor Primitives"
+subtitle: "Naval Research Laboratory"
+date:   2021-01-01 22:21:59 +00:00
+end_date:   2022-08-21 22:21:59 +00:00
+image: /images/space-illust.png
+categories: other-projects
+author: "Tyler Han"
+paper: pdfs/Koopman_ICRA2022_clean.pdf
+---
+In an undergraduate project, I tackled part of the challenge of teaching robots to perform
+motor skills from a small number of
+demonstrations. We proposed a novel approach
+by joining the theories of Koopman Operators
+and Dynamic Movement Primitives to Learning
+from Demonstration. Our approach, named Autoencoder Dynamic Mode Decomposition (aDMD),
+projects nonlinear dynamical systems into linear
+latent spaces such that a solution reproduces the
+desired complex motion. Use of an autoencoder in
+our approach enables generalizability and scalabil-
+ity, while the constraint to a linear system attains
+interpretability.
+We show results on the LASA Handwriting dataset but with training on
+only a small fractions of the letters.
