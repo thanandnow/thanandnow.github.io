@@ -62,7 +62,7 @@
             </td>
           </tr>
         </table>
-<!-- 
+
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
 
           {% for post in site.posts %}
@@ -83,6 +83,9 @@
               {% if post.arxiv %}
               <a href="{{post.arxiv}}">arxiv</a> /
               {% endif %}
+              {% if post.website %}
+              <a href="{{post.website}}">website</a> /
+              {% endif %}
               {% if post.video %}
               <a href="{{post.video}}">video</a> /
               {% endif %}
@@ -102,11 +105,11 @@
           {% endif %}
           {% endfor %}
           {% endfor %}
-        </table> -->
+        </table>
 
-        <!-- <br>
         <br>
-        <br> -->
+        <br>
+        <br>
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
           <tr>
             <td style="padding:2.5%;width:100%;vertical-align:middle">
