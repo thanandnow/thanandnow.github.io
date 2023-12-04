@@ -7,6 +7,7 @@ image: /images/vditch.gif
 categories: research
 author: "Tyler Han"
 authors: "<strong>Tyler Han</strong>, Alex Liu, Anqi Li, Alex Spitzer, Guanya Shi, Byron Boots"
+venue: ArXiv
 arxiv: https://arxiv.org/abs/2311.12284.pdf
 website: https://sites.google.com/cs.washington.edu/off-road-mpc
 ---
