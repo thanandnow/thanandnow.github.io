@@ -5,8 +5,11 @@ subtitle: "Naval Research Laboratory"
 date:   2021-01-01 22:21:59 +00:00
 end_date:   2022-08-21 22:21:59 +00:00
 image: /images/space-illust.png
-categories: other-projects
+categories: research
+venue: arXiv preprint
 author: "Tyler Han"
+authors: "<strong>Tyler Han</strong>, Carl Glen Henshaw"
+arxiv: https://arxiv.org/abs/2312.03328
 paper: pdfs/Koopman_ICRA2022_clean.pdf
 ---
 In an undergraduate project, I tackled part of the challenge of teaching robots to perform

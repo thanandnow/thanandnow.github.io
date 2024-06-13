@@ -39,7 +39,7 @@
               <p style="text-align:center">
                 <a target="_blank" href="https://mailhide.io/e/YccvhBkW"> Email</a> &nbsp;/&nbsp;
                 <a href="https://github.com/geiko245">GitHub</a> &nbsp;/&nbsp;
-                <!-- <a href="https://scholar.google.com/citations?user=GCYG4GoAAAAJ">Google Scholar</a> &nbsp;/&nbsp; -->
+                <a href="https://scholar.google.com/citations?user=W-wk8X0AAAAJ&hl">Google Scholar</a> &nbsp;/&nbsp;
                 <a href="https://www.linkedin.com/in/than123/"> LinkedIn </a>
               </p>
             </td>
@@ -53,11 +53,53 @@
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
           <tr>
             <td style="padding:2.5%;width:100%;vertical-align:middle">
+              <style>
+                .ni {
+                  vertical-align: top;
+                  padding: 5px;
+                }
+                .nd {
+                  vertical-align: top;
+                  padding: 5px;
+                  font-weight: bold;
+                }
+              </style>
+              <h2>News</h2>
+              <p>
+              <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;padding:10px;vertical-align:top;">
+                <tr>
+                  <td class="nd">05/2024</td>
+                  <td class="ni">
+                    "Model Predictive Control for Aggressive Driving Over Uneven Terrain" is accepted to R:SS 2024.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="nd">05/2024</td>
+                  <td class="ni">"Dynamics Models in the Aggressive Off-Road Driving Regime" is accepted to ICRA 2024 Workshop on Resilient Off-Road Autonomy.</td>
+                </tr>
+                <tr>
+                  <td class="nd">04/2024</td>
+                  <td class="ni">Invited to Review for ICRA 2024 Workshop on Resilient Off-Road Autonomy</td>
+                </tr>
+                <tr>
+                  <td class="nd">03/2023</td>
+                  <td class="ni">Awarded the National Science Founation Graduate Fellowship (NSF GRFP)</td>
+                </tr>
+              </table>
+              </p>
+            </td>
+          </tr>
+        </table>
+
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+          <tr>
+            <td style="padding:2.5%;width:100%;vertical-align:middle">
               <h2>Research</h2>
               <p>
-              I am generally interested in techniques that combine machine learning and engineering. Within robotics, I am particularly
-              interested in ill-defined engineering and autonomy challenges. Often, these problems require some "human intuition" to help
-              constrain the solution. Some techniques I have been investigating involve learning from demonstration (LfD) and Inverse Reinforcement Learning (IRL).
+              I am interested in using machine learning for automating systems with complex, real-world dynamics. Humans are
+              inexplicably efficient with limited information and experience &mdash; not only in controlling their own bodies but
+              also machines and tools. How can human efficiency and adaptability be formalized then transferred to data pipelines
+              for robotics?
               </p>
             </td>
           </tr>
@@ -77,11 +119,10 @@
               <br>
               {{post.authors}}
 
+              {% if post.venue %}
               <br>
               <em>{{post.venue}}</em>, {{ post.date | date: "%Y" }}
               <br>
-              {% if post.arxiv %}
-              <a href="{{post.arxiv}}">arxiv</a> /
               {% endif %}
               {% if post.website %}
               <a href="{{post.website}}">website</a> /
@@ -98,6 +139,9 @@
               {% if post.slides %}
               <a href="{{post.slides}}">slides</a> /
               {% endif %}
+              {% if post.arxiv %}
+              <a href="{{post.arxiv}}">arXiv</a>
+              {% endif %}
               {% assign word_limit = 50 %}
               {% assign truncated_content = post.excerpt | truncatewords: word_limit, '' %}
               <p>
@@ -113,10 +157,7 @@
           {% endfor %}
         </table>
 
-        <br>
-        <br>
-        <br>
-        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+        <!-- <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
           <tr>
             <td style="padding:2.5%;width:100%;vertical-align:middle">
               <h2>Miscellaneous Projects</h2>
@@ -124,7 +165,7 @@
               </p>
             </td>
           </tr>
-        </table>
+        </table> -->
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
 
           {% for post in site.posts %}
