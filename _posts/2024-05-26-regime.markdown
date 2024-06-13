@@ -1,0 +1,13 @@
+---
+layout: post
+title:  "Dynamics Models in the Aggressive Off-Road Driving Regime"
+date:   2024-06-01 22:21:59 +00:00
+end_date:   Present
+image: /images/regime.png
+categories: research
+author: "Tyler Han"
+authors: "<strong>Tyler Han</strong>, Sidharth Talia, Rohan Panicker, Preet Shah, Neel Jawale, Byron Boots"
+venue: "Workshop on Resilient Off-Road Autonomy, ICRA"
+arxiv: https://arxiv.org/abs/2405.16487
+---
+Current developments in autonomous off-road driving are steadily increasing performance through higher speeds and more challenging, unstructured environments. However, this operating regime subjects the vehicle to larger inertial effects, where consideration of higher-order states is necessary to avoid failures such as rollovers or excessive impact forces. Aggressive driving through Model Predictive Control (MPC) in these conditions requires dynamics models that accurately predict safety-critical information. This work aims to empirically quantify this aggressive operating regime and its effects on the performance of current models. We evaluate three dynamics models of varying complexity on two distinct off-road driving datasets: one simulated and the other real-world. By conditioning trajectory data on higher-order states, we show that model accuracy degrades with aggressiveness and simpler models degrade faster. These models are also validated across datasets, where accuracies over safety-critical states are reported and provide benchmarks for future work.
