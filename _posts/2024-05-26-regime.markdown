@@ -7,6 +7,7 @@ image: /images/regime.png
 categories: research
 author: "Tyler Han"
 authors: "<strong>Tyler Han</strong>, Sidharth Talia, Rohan Panicker, Preet Shah, Neel Jawale, Byron Boots"
+code: https://github.com/prl-mushr/BeamNGRL
 venue: "Workshop on Resilient Off-Road Autonomy, ICRA"
 arxiv: https://arxiv.org/abs/2405.16487
 ---

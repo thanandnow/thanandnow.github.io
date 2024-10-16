@@ -1,13 +1,14 @@
 ---
 layout: post
 title:  "Transferable Reinforcement Learning via Generalized Occupancy Models"
-date:   2024-05-28 22:21:59 +00:00
+date:   2024-10-05 22:21:59 +00:00
 end_date:   Present
 image: /images/x1.png
 categories: research
 authors: "Chuning Zhu, Xinqi Wang, <strong>Tyler Han</strong>, Simon Du, Abhishek Gupta"
-venue: "arXiv preprint"
+venue: "Neural Information Processing Systems (NeurIPS)"
 arxiv: https://arxiv.org/abs/2403.06328
 website: https://weirdlabuw.github.io/gom/
+code: https://github.com/WEIRDLabUW/gom
 ---
 Intelligent agents must be generalists, capable of quickly adapting to various tasks. In reinforcement learning (RL), model-based RL learns a dynamics model of the world, in principle enabling transfer to arbitrary reward functions through planning. However, autoregressive model rollouts suffer from compounding error, making model-based RL ineffective for long-horizon problems. Successor features offer an alternative by modeling a policy’s long-term state occupancy, reducing policy evaluation under new tasks to linear reward regression. Yet, policy improvement with successor features can be challenging. This work proposes a novel class of models, i.e., generalized occupancy models (GOMs), that learn a distribution of successor features from a stationary dataset, along with a policy that acts to realize different successor features. These models can quickly select the optimal action for arbitrary new tasks. By directly modeling long-term outcomes in the dataset, GOMs avoid compounding error while enabling rapid transfer across reward functions. We present a practical instantiation of GOMs using diffusion models and show their efficacy as a new class of transferable models, both theoretically and empirically across various simulated robotics problems. Videos and code: https://weirdlabuw.github.io/gom/.
