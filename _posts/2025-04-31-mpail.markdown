@@ -1,0 +1,19 @@
+---
+layout: post
+title:  "Model Predictive Adversarial Imitation Learning for Planning from Observation"
+date:   2025-01-31 22:21:59 +00:00
+end_date:   Present
+image: /images/mpail-fig1.png
+categories: research
+author: "Tyler Han"
+authors: "<strong>Tyler Han</strong>, Yanda Bao, Bhaumik Mehta, Gabriel Guo, Anubhav Vishwakarma, Emily Kang, Sanghun Jung, Rosario Scalise, Jason Zhou, Bryan Xu, Byron Boots"
+venue: Under Review
+# arxiv: https://arxiv.org/abs/2502.07380.pdf
+other:
+    title: Preprint Coming Soon
+    link: None
+---
+Human demonstration data is often ambiguous and incomplete, motivating imitation learning approaches that also exhibit reliable planning behavior.
+A common paradigm learns a reward function via Inverse Reinforcement Learning (IRL) and deploys it using Model Predictive Control (MPC) to reliably imitate
+expert behavior. In this work, we propose replacing the policy in IRL with a learnable MPC agent, enabling planning directly from observation-only demonstrations. Further grounded by a connection to Adversarial Imitation Learning,
+this formulation improves on sample efficiency, out-of-distribution generalization, and computational complexity, while maintaining feasible real-time, long-horizon planning. We demonstrate the effectiveness of this replacement in both simulated control benchmarks and real-world navigation experiments with limited demonstrations, sensing, and compute. This approach highlights a scalable and interpretable path toward planning-from-observation in high-dimensional, partially observable environments

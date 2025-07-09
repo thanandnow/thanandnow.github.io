@@ -69,6 +69,10 @@
               <p>
               <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;padding:10px;vertical-align:top;">
                 <tr>
+                  <td class="nd">6/2025</td>
+                  <td class="ni">Award committee member and organizer for Resilient Off-Road Autonomous Robotics Workshop at RSS 2025</td>
+                </tr>
+                <tr>
                   <td class="nd">10/2024</td>
                   <td class="ni">Invited to review: International Conference on Robotics and Automation (ICRA) 2025, Robotics and Automation Letters (RA-L), and Transactions on Robotics (T-RO)</td>
                 </tr>
@@ -152,6 +156,12 @@
               {% endif %}
               {% if post.arxiv %}
               <a href="{{post.arxiv}}">arXiv</a>
+              {% endif %}
+              {% if post.other %}
+              / <a href="{{post.other.link}}">{{post.other.title}}</a>
+              {% endif %}
+              {% if post.other2 %}
+              / <a href="{{post.other2.link}}">{{post.other2.title}}</a>
               {% endif %}
               {% assign word_limit = 50 %}
               {% assign truncated_content = post.excerpt | truncatewords: word_limit, '' %}
