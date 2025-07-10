@@ -10,14 +10,14 @@ authors: "<strong>Tyler Han</strong>, Preet Shah, Sidharth Rajagopal, Yanda Bao,
 venue: arXiv preprint
 code: https://github.com/UWRobotLearning/WheeledLab
 arxiv: https://arxiv.org/abs/2502.07380.pdf
-website: https://uwrobotlearning.github.io
-poster: TODO
+website: https://uwrobotlearning.github.io/WheeledLab
+poster: /images/wheeledlab-poster.png
 other:
-    title: NVIDIA feature
-    link: TODO
+    title: NVIDIA spotlight
+    link: https://blogs.nvidia.com/blog/national-robotics-week-2025/#wheeled-lab
 other2:
-    title: interview
-    link: TODO
+    title: Q&A video
+    link: https://www.youtube.com/watch?v=Y4b-cz2xB1w
 ---
 Simulation has been pivotal in recent robotics milestones and is poised to play a prominent role in the field's future.
 However, recent robotic advances often rely on expensive and high-maintenance platforms, limiting access to broader robotics audiences. This work introduces Wheeled Lab, a framework for the low-cost, open-source wheeled platforms that are already widely established in education and research. Through integration with Isaac Lab, Wheeled Lab introduces 
