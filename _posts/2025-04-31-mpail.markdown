@@ -8,12 +8,13 @@ categories: research
 author: "Tyler Han"
 authors: "<strong>Tyler Han</strong>, Yanda Bao, Bhaumik Mehta, Gabriel Guo, Anubhav Vishwakarma, Emily Kang, Sanghun Jung, Rosario Scalise, Jason Zhou, Bryan Xu, Byron Boots"
 venue: Under Review
-# arxiv: https://arxiv.org/abs/2502.07380.pdf
+arxiv: https://arxiv.org/abs/2507.21533
 other:
-    title: Preprint Coming Soon
+    title: code coming soon
     link: None
 ---
-Human demonstration data is often ambiguous and incomplete, motivating imitation learning approaches that also exhibit reliable planning behavior.
-A common paradigm learns a reward function via Inverse Reinforcement Learning (IRL) and deploys it using Model Predictive Control (MPC) to reliably imitate
-expert behavior. In this work, we propose replacing the policy in IRL with a learnable MPC agent, enabling planning directly from observation-only demonstrations. Further grounded by a connection to Adversarial Imitation Learning,
-this formulation improves on sample efficiency, out-of-distribution generalization, and computational complexity, while maintaining feasible real-time, long-horizon planning. We demonstrate the effectiveness of this replacement in both simulated control benchmarks and real-world navigation experiments with limited demonstrations, sensing, and compute. This approach highlights a scalable and interpretable path toward planning-from-observation in high-dimensional, partially observable environments
+Human demonstration data is often ambiguous and incomplete, motivating imitation learning approaches that also exhibit reliable planning behavior. A common paradigm to perform planning-from-demonstration involves learning a reward function via Inverse Reinforcement Learning (IRL) then deploying this reward via Model Predictive Control (MPC). Towards unifying these methods, we derive a replacement of the policy in IRL with a planning-based agent. With connections to Adversarial Imitation Learning, this formulation enables end-to-end interactive learning of planners from observation-only demonstrations.
+In addition to benefits in interpretability, complexity, and safety, 
+we study and observe significant improvements on sample efficiency, out-of-distribution generalization, and robustness.
+The study includes evaluations in both simulated control benchmarks and
+real-world navigation experiments using few-to-single observation-only demonstrations.
