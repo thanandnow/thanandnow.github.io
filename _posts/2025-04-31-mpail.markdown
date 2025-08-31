@@ -7,7 +7,7 @@ image: /images/mpail-fig1.png
 categories: research
 author: "Tyler Han"
 authors: "<strong>Tyler Han</strong>, Yanda Bao, Bhaumik Mehta, Gabriel Guo, Anubhav Vishwakarma, Emily Kang, Sanghun Jung, Rosario Scalise, Jason Zhou, Bryan Xu, Byron Boots"
-venue: Under Review
+venue: arXiv preprint
 arxiv: https://arxiv.org/abs/2507.21533
 other:
     title: code coming soon

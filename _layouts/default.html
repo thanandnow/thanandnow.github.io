@@ -13,6 +13,56 @@
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
+  <style>
+    .abstract-toggle {
+      cursor: pointer;
+      color: #1772d0;
+      text-decoration: underline;
+    }
+    .abstract-toggle:hover {
+      color: #f09228;
+    }
+    .full-abstract {
+      display: none !important;
+    }
+    .full-abstract.show {
+      display: inline !important;
+    }
+    .truncated-abstract {
+      display: inline;
+    }
+    .truncated-abstract.hide {
+      display: none !important;
+    }
+  </style>
+
+  <script>
+    function toggleAbstract(id) {
+      console.log('Toggling abstract for:', id);
+      const truncated = document.getElementById('truncated-' + id);
+      const full = document.getElementById('full-' + id);
+      
+      console.log('Truncated element:', truncated);
+      console.log('Full element:', full);
+      
+      if (truncated && full) {
+        if (full.classList.contains('show')) {
+          // Hide full, show truncated
+          full.classList.remove('show');
+          truncated.classList.remove('hide');
+          console.log('Showing truncated');
+        } else {
+          // Hide truncated, show full
+          truncated.classList.add('hide');
+          full.classList.add('show');
+          console.log('Showing full');
+        }
+      } else {
+        console.error('Could not find elements for ID:', id);
+      }
+    }
+  </script>
+
 </head>
 
 
@@ -69,7 +119,22 @@
               <p>
               <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;padding:10px;vertical-align:top;">
                 <tr>
-                  <td class="nd">6/2025</td>
+                  <td class="nd">08/2025</td>
+                  <td class="ni">"Wheeled Lab: Modern Sim2Real for Low-Cost, Open-Source Wheeled Robotics" is <span style="font-weight:bold;color:green">accepted to</span> CoRL 2025!</td>
+                </tr>
+                <tr>
+                  <td class="nd">04/2025</td>
+                  <td class="ni">
+                    I'm hosted by <a href="https://www.youtube.com/@LycheeAI">LycheeAI</a> to answer community questions about <a href="https://uwrobotlearning.github.io/WheeledLab/"><strong>Wheeled Lab</strong></a>. Check it out <a href="https://www.youtube.com/watch?v=Y4b-cz2xB1w">here</a>!
+                    I'm also hosted by <a href="https://www.youtube.com/@madeautonomous">The Robotics Club</a> in a follow-up interview about my experience as a PhD student. Find that <a href="https://www.youtube.com/watch?v=39NB43yLAs0">here</a>.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="nd">04/2025</td>
+                  <td class="ni"><a href="https://uwrobotlearning.github.io/WheeledLab/"><strong>Wheeled Lab</strong></a> is featured in <a href="https://blogs.nvidia.com/blog/national-robotics-week-2025/#wheeled-lab">NVIDIA's blog</a>!</td>
+                </tr>
+                <tr>
+                  <td class="nd">06/2025</td>
                   <td class="ni">Award committee member and organizer for <a href="https://off-roaders.github.io/off-road-workshop-2025/">Resilient Off-Road Autonomous Robotics Workshop at RSS 2025</a></td>
                 </tr>
                 <tr>
@@ -79,6 +144,12 @@
                 <tr>
                   <td class="nd">10/2024</td>
                   <td class="ni">"Transferable Reinforcement Learning via Generalized Occupancy Models" is <span style="font-weight:bold;color:green">accepted to</span> NeurIPS 2024</td>
+                </tr>
+                <tr>
+                  <td class="nd">07/2024</td>
+                  <td class="ni">
+                    I gave a talk at R:SS on "Model Predictive Control for Aggressive Driving Over Uneven Terrain". Watch it <a href="https://www.youtube.com/live/P0QLO1f86RU?t=20319s">here</a>.
+                  </td>
                 </tr>
                 <tr>
                   <td class="nd">05/2024</td>
@@ -156,18 +227,35 @@
               {% if post.arxiv %}
               <a href="{{post.arxiv}}">arXiv</a>
               {% endif %}
-              {% if post.other %}
-              / <a href="{{post.other.link}}">{{post.other.title}}</a>
-              {% endif %}
-              {% if post.other2 %}
-              / <a href="{{post.other2.link}}">{{post.other2.title}}</a>
-              {% endif %}
+              {% for i in (1..10) %}
+                {% if i == 1 %}
+                  {% assign other_key = 'other' %}
+                {% else %}
+                  {% assign other_key = 'other' | append: i %}
+                {% endif %}
+                {% assign other_item = post[other_key] %}
+                {% if other_item %}
+                / <a href="{{other_item.link}}">{{other_item.title}}</a>
+                {% endif %}
+              {% endfor %}
               {% assign word_limit = 50 %}
-              {% assign truncated_content = post.excerpt | truncatewords: word_limit, '' %}
+              {% assign cleaned_excerpt = post.excerpt | replace: '<p>', '' | replace: '</p>', '' %}
+              {% assign truncated_content = cleaned_excerpt | truncatewords: word_limit, '' %}
+              {% assign excerpt_words = cleaned_excerpt | strip_html | number_of_words %}
+              {% assign post_id = post.title | slugify %}
               <p>
-                {{ truncated_content }}
-                {% if post.excerpt.size > word_limit %}
-                  <a href="{{ post.arxiv }}"> [...] </a>
+                <!-- Debug info: Excerpt words: {{ excerpt_words }}, Word limit: {{ word_limit }} -->
+                {% if excerpt_words > word_limit %}
+                  <span id="truncated-{{ post_id }}" class="truncated-abstract">
+                    {{ truncated_content }}
+                    <span class="abstract-toggle" onclick="toggleAbstract('{{ post_id }}')">[...]</span>
+                  </span>
+                  <span id="full-{{ post_id }}" class="full-abstract">
+                    {{ cleaned_excerpt }}
+                    <span class="abstract-toggle" onclick="toggleAbstract('{{ post_id }}')">[hide]</span>
+                  </span>
+                {% else %}
+                  {{ cleaned_excerpt }}
                 {% endif %}
               </p>
             </td>
@@ -213,21 +301,36 @@
               {% if post.paper %}
               <a href="{{post.paper}}">paper</a> /
               {% endif %}
-              {% if post.patent %}
-              <a href="{{post.patent}}">patent</a> /
-              {% endif %}
-              {% if post.patent2 %}
-              <a href="{{post.patent2}}">patent #2</a> /
-              {% endif %}
-              {% if post.patent3 %}
-              <a href="{{post.patent3}}">patent #3</a> /
-              {% endif %}
-              {% if post.video %}
-              <a href="{{post.video}}">video</a> /
-              {% endif %}
-              {% if post.video2 %}
-              <a href="{{post.video2}}">video #2</a> /
-              {% endif %}
+              {% for i in (1..10) %}
+                {% if i == 1 %}
+                  {% assign patent_key = 'patent' %}
+                {% else %}
+                  {% assign patent_key = 'patent' | append: i %}
+                {% endif %}
+                {% assign patent_item = post[patent_key] %}
+                {% if patent_item %}
+                  {% if i == 1 %}
+                    <a href="{{patent_item}}">patent</a> /
+                  {% else %}
+                    <a href="{{patent_item}}">patent #{{i}}</a> /
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+              {% for i in (1..10) %}
+                {% if i == 1 %}
+                  {% assign video_key = 'video' %}
+                {% else %}
+                  {% assign video_key = 'video' | append: i %}
+                {% endif %}
+                {% assign video_item = post[video_key] %}
+                {% if video_item %}
+                  {% if i == 1 %}
+                    <a href="{{video_item}}">video</a> /
+                  {% else %}
+                    <a href="{{video_item}}">video #{{i}}</a> /
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
               {% if post.code %}
               <a href="{{post.code}}">code</a> /
               {% endif %}
@@ -239,11 +342,23 @@
               {% endif %}
               <p></p>
               {% assign word_limit = 50 %}
-              {% assign truncated_content = post.excerpt | truncatewords: word_limit, '' %}
+              {% assign cleaned_excerpt = post.excerpt | replace: '<p>', '' | replace: '</p>', '' %}
+              {% assign truncated_content = cleaned_excerpt | truncatewords: word_limit, '' %}
+              {% assign excerpt_words = cleaned_excerpt | strip_html | number_of_words %}
+              {% assign post_id = post.title | slugify | append: '-other' %}
               <p>
-                {{ truncated_content }}
-                {% if post.excerpt.size > word_limit %}
-                  <a href="{{ post.arxiv }}"> [...] </a>
+                <!-- Debug info: Excerpt words: {{ excerpt_words }}, Word limit: {{ word_limit }} -->
+                {% if excerpt_words > word_limit %}
+                  <span id="truncated-{{ post_id }}" class="truncated-abstract">
+                    {{ truncated_content }}
+                    <span class="abstract-toggle" onclick="toggleAbstract('{{ post_id }}')">[...]</span>
+                  </span>
+                  <span id="full-{{ post_id }}" class="full-abstract">
+                    {{ cleaned_excerpt }}
+                    <span class="abstract-toggle" onclick="toggleAbstract('{{ post_id }}')">[hide]</span>
+                  </span>
+                {% else %}
+                  {{ cleaned_excerpt }}
                 {% endif %}
               </p>
             </td>
