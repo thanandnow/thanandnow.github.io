@@ -119,6 +119,10 @@
               <p>
               <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;padding:10px;vertical-align:top;">
                 <tr>
+                  <td class="nd">09/2025</td>
+                  <td class="ni">"Model Predictive Adversarial Imitation Learning for Planning from Observation" is awarded Best Paper Finalist at the Resource-Rational Robot Learning Workshop at CoRL 2025!</td>
+                </tr>
+                <tr>
                   <td class="nd">08/2025</td>
                   <td class="ni">"Wheeled Lab: Modern Sim2Real for Low-Cost, Open-Source Wheeled Robotics" is <span style="font-weight:bold;color:green">accepted to</span> CoRL 2025!</td>
                 </tr>
@@ -238,6 +242,10 @@
                 / <a href="{{other_item.link}}">{{other_item.title}}</a>
                 {% endif %}
               {% endfor %}
+              {% if post.award %}
+              <!-- <br><span style="color:red;font-weight:bold;">{{ post.award | markdownify | remove: '<p>' | remove: '</p>' }}</span> -->
+              <br><span style="color:red;">{{ post.award | markdownify | remove: '<p>' | remove: '</p>' }}</span>
+              {% endif %}
               {% assign word_limit = 50 %}
               {% assign cleaned_excerpt = post.excerpt | replace: '<p>', '' | replace: '</p>', '' %}
               {% assign truncated_content = cleaned_excerpt | truncatewords: word_limit, '' %}
@@ -339,6 +347,9 @@
               {% endif %}
               {% if post.slides %}
               <a href="{{post.slides}}">slides</a> /
+              {% endif %}
+              {% if post.award %}
+              <br><span style="color:red;font-weight:bold;">{{ post.award | markdownify | remove: '<p>' | remove: '</p>' }}</span>
               {% endif %}
               <p></p>
               {% assign word_limit = 50 %}
