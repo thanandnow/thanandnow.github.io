@@ -1,20 +1,20 @@
 ---
 layout: post
 title:  "Model Predictive Adversarial Imitation Learning for Planning from Observation"
-date:   2025-01-31 22:21:59 +00:00
+date:   2026-01-31 22:21:59 +00:00
 end_date:   Present
-image: /images/mpail-fig1.png
+image: /images/mpail-real.gif
 categories: research
 author: "Tyler Han"
 authors: "<strong>Tyler Han</strong>, Yanda Bao, Bhaumik Mehta, Gabriel Guo, Anubhav Vishwakarma, Emily Kang, Sanghun Jung, Rosario Scalise, Jason Zhou, Bryan Xu, Byron Boots"
 award: Best Paper Finalist, Resource-Rational Robot Learning Workshop, CoRL 2025
+venue: International Conference on Learning Representations (ICLR)
 arxiv: https://arxiv.org/abs/2507.21533
 other:
     title: code coming soon
     link: None
+other2:
+    title: OpenReview
+    link: https://openreview.net/forum?id=rTlPfuKTNg
 ---
-Human demonstration data is often ambiguous and incomplete, motivating imitation learning approaches that also exhibit reliable planning behavior. A common paradigm to perform planning-from-demonstration involves learning a reward function via Inverse Reinforcement Learning (IRL) then deploying this reward via Model Predictive Control (MPC). Towards unifying these methods, we derive a replacement of the policy in IRL with a planning-based agent. With connections to Adversarial Imitation Learning, this formulation enables end-to-end interactive learning of planners from observation-only demonstrations.
-In addition to benefits in interpretability, complexity, and safety, 
-we study and observe significant improvements on sample efficiency, out-of-distribution generalization, and robustness.
-The study includes evaluations in both simulated control benchmarks and
-real-world navigation experiments using few-to-single observation-only demonstrations.
+Humans can often perform a new task after observing a few demonstrations by inferring the underlying intent. For robots, recovering the intent of the demonstrator through a learned reward function can enable more efficient, interpretable, and robust imitation through planning. A common paradigm for learning how to plan-from-demonstration involves first solving for a reward via Inverse Reinforcement Learning (IRL) and then deploying it via Model Predictive Control (MPC). In this work, we unify these two procedures by introducing planning-based Adversarial Imitation Learning, which simultaneously learns a reward and improves a planning-based agent through experience while using observation-only demonstrations. We study advantages of planning-based AIL in generalization, interpretability, robustness, and sample efficiency through experiments in simulated control tasks and real-world navigation from few or single observation-only demonstration.
