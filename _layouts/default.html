@@ -215,8 +215,8 @@
               {% if post.venue %}
               <br>
               <em>{{post.venue}}</em>, {{ post.date | date: "%Y" }}
-              <br>
               {% endif %}
+              <br>
               {% if post.website %}
               <a href="{{post.website}}">website</a> /
               {% endif %}
@@ -235,6 +235,7 @@
               {% if post.arxiv %}
               <a href="{{post.arxiv}}">arXiv</a>
               {% endif %}
+              {% assign printed_other = false %}
               {% for i in (1..10) %}
                 {% if i == 1 %}
                   {% assign other_key = 'other' %}
@@ -243,7 +244,8 @@
                 {% endif %}
                 {% assign other_item = post[other_key] %}
                 {% if other_item %}
-                / <a href="{{other_item.link}}">{{other_item.title}}</a>
+                {% if post.arxiv or printed_other %} / {% endif %}<a href="{{other_item.link}}">{{other_item.title}}</a>
+                {% assign printed_other = true %}
                 {% endif %}
               {% endfor %}
               {% if post.award %}

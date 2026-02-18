@@ -1,0 +1,20 @@
+---
+layout: post
+title:  "Planning from Observation and Interaction"
+date:   2026-02-17 22:21:59 +00:00
+end_date:   Present
+image: /images/mpail2.jpg
+categories: research
+author: "Tyler Han"
+authors: "<strong>Tyler Han</strong>, Siyang Shen, Rohan Baijal, Harine Ravichandran, Bat Nemekhbold, Kevin Huang, Sanghun Jung, Byron Boots"
+website: https://uwrobotlearning.github.io/mpail2/
+other:
+    title: paper soon
+    link: None
+---
+Observational learning requires an agent to learn to perform a task by referencing only observations of the performed task.
+This work investigates the equivalent setting in real-world robot learning where access to hand-designed rewards and demonstrator actions are not assumed.
+To address this data-constrained setting, this work presents a planning-based Inverse Reinforcement Learning (IRL) algorithm for world modeling from observation and interaction alone.
+Experiments conducted entirely in the real-world demonstrate that this paradigm is effective for learning image-based manipulation tasks from scratch in under an hour, without assuming prior knowledge, pre-training, or data of any kind beyond task observations.
+Moreover, this work demonstrates that the learned world model representation is capable of online transfer learning in the real-world from scratch.
+In comparison to existing approaches, including IRL, RL, and Behavior Cloning (BC), which have more restrictive assumptions, the proposed approach demonstrates significantly greater sample efficiency and success rates, enabling a practical path forward for online world modeling and planning from observation and interaction.

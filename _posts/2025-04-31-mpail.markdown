@@ -11,9 +11,6 @@ award: Best Paper Finalist, Resource-Rational Robot Learning Workshop, CoRL 2025
 venue: International Conference on Learning Representations (ICLR)
 arxiv: https://arxiv.org/abs/2507.21533
 other:
-    title: code coming soon
-    link: None
-other2:
     title: OpenReview
     link: https://openreview.net/forum?id=rTlPfuKTNg
 ---
