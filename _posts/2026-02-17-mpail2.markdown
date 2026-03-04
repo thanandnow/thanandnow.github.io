@@ -3,14 +3,13 @@ layout: post
 title:  "Planning from Observation and Interaction"
 date:   2026-02-17 22:21:59 +00:00
 end_date:   Present
-image: /images/mpail2.jpg
+image: /images/mpail2-teaser.gif
 categories: research
 author: "Tyler Han"
 authors: "<strong>Tyler Han</strong>, Siyang Shen, Rohan Baijal, Harine Ravichandran, Bat Nemekhbold, Kevin Huang, Sanghun Jung, Byron Boots"
+arxiv: https://arxiv.org/pdf/2602.24121
 website: https://uwrobotlearning.github.io/mpail2/
-other:
-    title: paper soon
-    link: None
+code: https://github.com/UWRobotLearning/mpail2/
 ---
 Observational learning requires an agent to learn to perform a task by referencing only observations of the performed task.
 This work investigates the equivalent setting in real-world robot learning where access to hand-designed rewards and demonstrator actions are not assumed.
