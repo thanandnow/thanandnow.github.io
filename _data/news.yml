@@ -1,0 +1,78 @@
+# =============================================================================
+# News entries — edit this file to add/update news. No code changes needed.
+#
+# To ADD a news item: copy a block below and fill in `date` and `html`.
+#   - `date`: the date label shown on the left (e.g. "09/2025")
+#   - `html`: the news text. Plain text is fine; HTML is allowed for links,
+#             bold, colors, etc. Use the `|` block style as shown so you can
+#             write multiple lines and use quotes/special characters freely.
+#
+# Entries appear on the page in the SAME ORDER they are listed here.
+# To reorder, just move a block up or down.
+#
+# Handy snippets you can paste inside `html`:
+#   accepted:  <span style="font-weight:bold;color:green">accepted to</span>
+#   awarded:   <span style="font-weight:bold;color:#B8860B">awarded</span>
+#   link:      <a href="https://example.com">link text</a>
+# =============================================================================
+
+- date: "06/2026"
+  html: |
+    New MPAIL2 website is live! Learn more about real-world IRL <a href="https://mpail2.github.io/">here</a>!
+
+- date: "05/2026"
+  html: |
+    Invited speaker at Global Innovation Exchange (GIX) UW
+
+- date: "09/2025"
+  html: |
+    "Model Predictive Adversarial Imitation Learning for Planning from Observation" is <span style="font-weight:bold;color:green">accepted to</span> ICLR 2026!
+
+- date: "09/2025"
+  html: |
+    "Model Predictive Adversarial Imitation Learning for Planning from Observation" is <span style="font-weight:bold;color:#B8860B">awarded</span> Best Paper Finalist at the Resource-Rational Robot Learning Workshop at CoRL 2025!
+
+- date: "08/2025"
+  html: |
+    "Wheeled Lab: Modern Sim2Real for Low-Cost, Open-Source Wheeled Robotics" is <span style="font-weight:bold;color:green">accepted to</span> CoRL 2025!
+
+- date: "04/2025"
+  html: |
+    I'm hosted by <a href="https://www.youtube.com/@LycheeAI">LycheeAI</a> to answer community questions about <a href="https://uwrobotlearning.github.io/WheeledLab/"><strong>Wheeled Lab</strong></a>. Check it out <a href="https://www.youtube.com/watch?v=Y4b-cz2xB1w">here</a>!
+    I'm also hosted by <a href="https://www.youtube.com/@madeautonomous">The Robotics Club</a> in a follow-up interview about my experience as a PhD student. Find that <a href="https://www.youtube.com/watch?v=39NB43yLAs0">here</a>.
+
+- date: "04/2025"
+  html: |
+    <a href="https://uwrobotlearning.github.io/WheeledLab/"><strong>Wheeled Lab</strong></a> is featured in <a href="https://blogs.nvidia.com/blog/national-robotics-week-2025/#wheeled-lab">NVIDIA's blog</a>!
+
+- date: "06/2025"
+  html: |
+    Award committee member and organizer for <a href="https://off-roaders.github.io/off-road-workshop-2025/">Resilient Off-Road Autonomous Robotics Workshop at RSS 2025</a>
+
+- date: "10/2024"
+  html: |
+    Invited to review: International Conference on Robotics and Automation (ICRA) 2025, Robotics and Automation Letters (RA-L), and Transactions on Robotics (T-RO)
+
+- date: "10/2024"
+  html: |
+    "Transferable Reinforcement Learning via Generalized Occupancy Models" is <span style="font-weight:bold;color:green">accepted to</span> NeurIPS 2024
+
+- date: "07/2024"
+  html: |
+    I gave a talk at R:SS on "Model Predictive Control for Aggressive Driving Over Uneven Terrain". Watch it <a href="https://www.youtube.com/live/P0QLO1f86RU?t=20319s">here</a>.
+
+- date: "05/2024"
+  html: |
+    "Model Predictive Control for Aggressive Driving Over Uneven Terrain" is <span style="font-weight:bold;color:green">accepted to</span> R:SS 2024.
+
+- date: "05/2024"
+  html: |
+    "Dynamics Models in the Aggressive Off-Road Driving Regime" is <span style="font-weight:bold;color:green">accepted to</span> ICRA 2024 Workshop on Resilient Off-Road Autonomy
+
+- date: "04/2024"
+  html: |
+    Invited to review for ICRA 2024 Workshop on Resilient Off-Road Autonomy
+
+- date: "03/2023"
+  html: |
+    <span style="font-weight:bold;color:#B8860B">Awarded</span> the National Science Founation Graduate Research Fellowship (NSF GRFP)

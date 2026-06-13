@@ -1,0 +1,16 @@
+# =============================================================================
+# Representative publications — edit this file to choose which papers are
+# highlighted (yellow background) in the Research section. No code changes needed.
+#
+# List the SLUG of each representative paper, one per line, as `- slug`.
+# A paper's slug is the part of its filename in _posts/ AFTER the date.
+# Examples:
+#   _posts/2026-02-17-mpail2.markdown        -> mpail2
+#   _posts/2025-01-31-wheeled-lab.markdown   -> wheeled-lab
+#   _posts/2024-10-15-off-road-mpc.markdown  -> off-road-mpc
+#
+# To highlight a paper, add its slug below. To un-highlight, remove the line.
+# =============================================================================
+
+- mpail2
+- wheeled-lab

@@ -1,0 +1,39 @@
+# =============================================================================
+# Education — edit this file to add/update entries shown under the "Education"
+# tab. No code changes needed.
+#
+# Fields per entry (same schema as _data/mentoring.yml):
+#   project:      (required) title, shown in bold
+#   mentee:       (optional) name(s), shown as a plain line
+#   role:         (optional) affiliation + dates, shown in italics
+#   image:        (optional) path to a thumbnail, e.g. /images/foo.png
+#   description:  (optional) Markdown allowed (bold, lists, links, paragraphs)
+#   links:        (optional) list of { title, url }
+#
+# Entries appear in the order listed here. Copy a block to add a new one.
+# =============================================================================
+
+- project: "Low-cost Terrain Navigation for Education in End-to-End Robotics"
+  mentee: "Laura Wang, Caleb Hsu, Byron Boots, Tyler Han"
+  role: "CSE 494 capstone project, University of Washington, 2026"
+  image: /images/depth-elev-teaser.png
+  description: |
+    Eliminates dependency on an inaccessible motion capture system by developing a depth-image based navigation policy in Wheeled Lab. A Sim2Real project in just two quarters! Well done, Laura!
+  links:
+    - title: poster
+      url: /pdfs/depth-elev.pdf
+
+- project: "Wheeled Lab"
+  role: "University of Washington, February 2025 - present"
+  image: /images/wl-teaser.gif
+  stars: UWRobotLearning/WheeledLab
+  description: |
+    Created an open-source education platform for students new to reinforcement
+    learning in robotics, and advise undergraduate teams beginning in robotics by
+    mentoring extracurricular Sim2Real projects.
+    <br><br>
+    If you're interested in RL and robotics but don't know where to start, consider starting with us!
+    There are currently 12 students with self-driven Sim2Real projects spanning pre-trained encoders, Real2Sim, depth-based Sim2Real, high-performance visual racing, and more!
+  links:
+    - title: website
+      url: https://uwrobotlearning.github.io/WheeledLab/

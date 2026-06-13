@@ -1,0 +1,41 @@
+# =============================================================================
+# Mentored students — shown as a photo grid under the "Mentoring" tab.
+#
+# Grouped by level. To add a student, add a `- name:` entry under a group.
+#   name:   (required) student's name
+#   to:     (optional) destination / next step, e.g. "→ Field AI"
+#   image:  (optional) headshot path. If omitted, an initials avatar is shown.
+#           Square images look best (headshots are auto-cropped to circles).
+# =============================================================================
+
+- level: "Master's students"
+  students:
+    - name: "Siyang Shen"
+      to: "→ Paxini"
+      image: /images/students/siyang-shen.jpg
+    - name: "Anubhav Vishwakarma"
+      to: "→ Field AI"
+      image: /images/students/anubhav-vishwakarma.jpg
+    - name: "Preet Shah"
+      to: "→ Research Engineer, General Robotics"
+    - name: "Alex Liu"
+      to: "→ Software Engineer, Amazon"
+
+- level: "Undergraduate students"
+  students:
+    - name: "Laura Wang"
+    - name: "Urvi Rutia"
+    - name: "Bhaumik Mehta"
+      image: /images/students/bhaumik-mehta.jpg
+    - name: "Bryan Xu"
+      image: /images/students/bryan-xu.jpg
+    - name: "Yanda Bao"
+    - name: "Sidharth Rajagopal"
+      image: /images/students/sidharth-rajagopal.jpg
+    - name: "Gabe Guo"
+    - name: "Alyssa Giedd"
+      to: "→ Ph.D. at University of Washington"
+
+- level: "High-school students"
+  students:
+    - name: "Vansh Chhabra"

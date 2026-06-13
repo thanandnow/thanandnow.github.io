@@ -1,0 +1,16 @@
+# =============================================================================
+# Mentoring projects — edit this file to add/update entries shown under the
+# "Mentoring" tab. No code changes needed.
+#
+# Fields per entry:
+#   project:      (required) title, shown in bold
+#   mentee:       (optional) student / mentee name(s), shown as a plain line
+#   role:         (optional) affiliation + dates, shown in italics
+#                 e.g. "Robot Learning Lab, June 2023 - present"
+#   image:        (optional) path to a thumbnail, e.g. /images/foo.png
+#   description:  (optional) Markdown allowed (bold **text**, lists, multiple
+#                 paragraphs separated by a blank line, links [text](url), etc.)
+#   links:        (optional) list of { title, url }
+#
+# Entries appear in the order listed here. Copy a block to add a new one.
+# =============================================================================
