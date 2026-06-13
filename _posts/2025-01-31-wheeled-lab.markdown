@@ -11,6 +11,7 @@ author: "Tyler Han"
 authors: "<strong>Tyler Han</strong>, Preet Shah, Sidharth Rajagopal, Yanda Bao, Sanghun Jung, Sidharth Talia, Gabriel Guo, Bryan Xu, Bhaumik Mehta, Emma Romig, Rosario Scalise, Byron Boots"
 venue: Conference on Robot Learning (CoRL)
 code: https://github.com/UWRobotLearning/WheeledLab
+stars: UWRobotLearning/WheeledLab
 arxiv: https://arxiv.org/abs/2502.07380.pdf
 website: https://uwrobotlearning.github.io/WheeledLab
 poster: /images/wheeledlab-poster.png

@@ -34,6 +34,121 @@
     .truncated-abstract.hide {
       display: none !important;
     }
+    .news-scroll {
+      max-height: 230px;
+      overflow-y: auto;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      padding: 0 8px;
+    }
+    .news-scroll.expanded {
+      max-height: none;
+      overflow-y: visible;
+    }
+    .news-toggle {
+      cursor: pointer;
+      color: #1772d0;
+      text-decoration: underline;
+      font-size: small;
+    }
+    .news-toggle:hover {
+      color: #f09228;
+    }
+    /* GitHub star count tag overlaid on a project's preview image (filled in by JS) */
+    .img-wrap {
+      position: relative;
+      display: inline-block;
+      line-height: 0;
+      max-width: 100%;
+    }
+    a.gh-tag {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      background: rgba(0, 0, 0, 0.72);
+      color: #fff;
+      font-size: x-small;
+      font-weight: bold;
+      line-height: 1.3;
+      padding: 2px 7px;
+      border-radius: 11px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    a.gh-tag:hover {
+      background: #f09228;
+    }
+    /* Mentored-students photo grid */
+    .student-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin: 4px 0 18px 0;
+    }
+    .student {
+      width: 96px;
+      text-align: center;
+    }
+    .student img,
+    .student .avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      margin: 0 auto;
+    }
+    .student .avatar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #b9c6d6;
+      color: #fff;
+      font-size: 1.6em;
+      font-weight: bold;
+    }
+    .student .sname {
+      display: block;
+      font-size: small;
+      font-weight: bold;
+      margin-top: 6px;
+      line-height: 1.2;
+    }
+    .student .sto {
+      display: block;
+      font-size: x-small;
+      color: #888;
+      line-height: 1.2;
+    }
+    /* Tabs (Research / Mentoring) */
+    .tab-bar {
+      border-bottom: 1px solid #ddd;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #999;
+      cursor: pointer;
+      padding: 4px 0;
+      margin: 0 28px 0 0;
+      border-bottom: 3px solid transparent;
+    }
+    .tab-btn:hover {
+      color: #f09228;
+    }
+    .tab-btn.active {
+      color: #000;
+      border-bottom: 3px solid #f09228;
+    }
+    .tab-panel {
+      display: none;
+    }
+    .tab-panel.active {
+      display: block;
+    }
   </style>
 
   <script>
@@ -61,6 +176,48 @@
         console.error('Could not find elements for ID:', id);
       }
     }
+
+    // Collapsed: news sits in a fixed-height scroll box (scroll for older items).
+    // Expanded: drop the height limit so the full list shows inline.
+    function toggleNews() {
+      var box = document.getElementById('news-scroll');
+      var btn = document.getElementById('news-toggle');
+      if (!box) { return; }
+      var expanded = box.classList.toggle('expanded');
+      if (btn) { btn.textContent = expanded ? 'Collapse ▴' : 'Expand all ▾'; }
+    }
+
+    // Fill in live GitHub star counts for any gh-stars link carrying a data-repo of owner/name.
+    function loadGitHubStars() {
+      document.querySelectorAll('.gh-stars').forEach(function (el) {
+        var repo = el.getAttribute('data-repo');
+        if (!repo) { return; }
+        fetch('https://api.github.com/repos/' + repo)
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (d) {
+            if (d && typeof d.stargazers_count === 'number') {
+              el.textContent = '★ ' + d.stargazers_count.toLocaleString();
+            } else {
+              var wrap = el.closest('.gh-stars-wrap');
+              (wrap || el).style.display = 'none';
+            }
+          })
+          .catch(function () {
+            var wrap = el.closest('.gh-stars-wrap');
+            (wrap || el).style.display = 'none';
+          });
+      });
+    }
+    document.addEventListener('DOMContentLoaded', loadGitHubStars);
+
+    function showTab(name) {
+      document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('active'); });
+      document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+      var panel = document.getElementById('panel-' + name);
+      var btn = document.getElementById('tab-' + name);
+      if (panel) { panel.classList.add('active'); }
+      if (btn) { btn.classList.add('active'); }
+    }
   </script>
 
 </head>
@@ -86,12 +243,14 @@
               <p>
                 Prior to UW, I completed my B.S. in Aerospace Engineering and B.S. in Computer Science at the University of Maryland, College Park. During my undergrad, I worked with Glen Henshaw and Patrick Wensing while at the Naval Research Laboratory in Washington, D.C.
               </p>
+              {% comment %} CV "updated" date is read automatically from the pdfs/CV.pdf file's modified time. {% endcomment %}
+              {% assign cv_file = site.static_files | where: "path", "/pdfs/CV.pdf" | first %}
               <p style="text-align:center">
                 <a target="_blank" href="https://mailhide.io/e/YccvhBkW"> Email</a> &nbsp;/&nbsp;
                 <a href="https://github.com/geiko246">GitHub</a> &nbsp;/&nbsp;
                 <a href="https://scholar.google.com/citations?user=W-wk8X0AAAAJ&hl">Google Scholar</a> &nbsp;/&nbsp;
                 <a href="https://www.linkedin.com/in/than123/"> LinkedIn </a> &nbsp;/&nbsp;
-                <a href="pdfs/CV.pdf"> CV </a>
+                <a href="pdfs/CV.pdf"> CV </a>{% if cv_file %}<span style="font-size:small;color:#888;"> (updated {{ cv_file.modified_time | date: "%b %Y" }})</span>{% endif %}
               </p>
             </td>
             <td style="padding:2.5%;width:40%;max-width:40%">
@@ -117,82 +276,54 @@
               </style>
               <h2>News</h2>
               <p>
+              <!-- News items are defined in _data/news.yml — edit that file to add/update news. -->
+              <!-- Recent items show first in a fixed-height scroll box; scroll for older items, or expand to show all. -->
+              <div class="news-scroll" id="news-scroll">
               <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;padding:10px;vertical-align:top;">
+                {% for item in site.data.news %}
                 <tr>
-                  <td class="nd">09/2025</td>
-                  <td class="ni">"Model Predictive Adversarial Imitation Learning for Planning from Observation" is <span style="font-weight:bold;color:green">accepted to</span> ICLR 2026!</td>
+                  <td class="nd">{{ item.date }}</td>
+                  <td class="ni">{{ item.html }}</td>
                 </tr>
-                <tr>
-                  <td class="nd">09/2025</td>
-                  <td class="ni">"Model Predictive Adversarial Imitation Learning for Planning from Observation" is <span style="font-weight:bold;color:#B8860B">awarded</span> Best Paper Finalist at the Resource-Rational Robot Learning Workshop at CoRL 2025!</td>
-                </tr>
-                <tr>
-                  <td class="nd">08/2025</td>
-                  <td class="ni">"Wheeled Lab: Modern Sim2Real for Low-Cost, Open-Source Wheeled Robotics" is <span style="font-weight:bold;color:green">accepted to</span> CoRL 2025!</td>
-                </tr>
-                <tr>
-                  <td class="nd">04/2025</td>
-                  <td class="ni">
-                    I'm hosted by <a href="https://www.youtube.com/@LycheeAI">LycheeAI</a> to answer community questions about <a href="https://uwrobotlearning.github.io/WheeledLab/"><strong>Wheeled Lab</strong></a>. Check it out <a href="https://www.youtube.com/watch?v=Y4b-cz2xB1w">here</a>!
-                    I'm also hosted by <a href="https://www.youtube.com/@madeautonomous">The Robotics Club</a> in a follow-up interview about my experience as a PhD student. Find that <a href="https://www.youtube.com/watch?v=39NB43yLAs0">here</a>.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="nd">04/2025</td>
-                  <td class="ni"><a href="https://uwrobotlearning.github.io/WheeledLab/"><strong>Wheeled Lab</strong></a> is featured in <a href="https://blogs.nvidia.com/blog/national-robotics-week-2025/#wheeled-lab">NVIDIA's blog</a>!</td>
-                </tr>
-                <tr>
-                  <td class="nd">06/2025</td>
-                  <td class="ni">Award committee member and organizer for <a href="https://off-roaders.github.io/off-road-workshop-2025/">Resilient Off-Road Autonomous Robotics Workshop at RSS 2025</a></td>
-                </tr>
-                <tr>
-                  <td class="nd">10/2024</td>
-                  <td class="ni">Invited to review: International Conference on Robotics and Automation (ICRA) 2025, Robotics and Automation Letters (RA-L), and Transactions on Robotics (T-RO)</td>
-                </tr>
-                <tr>
-                  <td class="nd">10/2024</td>
-                  <td class="ni">"Transferable Reinforcement Learning via Generalized Occupancy Models" is <span style="font-weight:bold;color:green">accepted to</span> NeurIPS 2024</td>
-                </tr>
-                <tr>
-                  <td class="nd">07/2024</td>
-                  <td class="ni">
-                    I gave a talk at R:SS on "Model Predictive Control for Aggressive Driving Over Uneven Terrain". Watch it <a href="https://www.youtube.com/live/P0QLO1f86RU?t=20319s">here</a>.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="nd">05/2024</td>
-                  <td class="ni">
-                    "Model Predictive Control for Aggressive Driving Over Uneven Terrain" is <span style="font-weight:bold;color:green">accepted to</span> R:SS 2024.
-                  </td>
-                </tr>
-                <tr>
-                  <td class="nd">05/2024</td>
-                  <td class="ni">"Dynamics Models in the Aggressive Off-Road Driving Regime" is
-                    <span style="font-weight:bold;color:green">accepted to</span>
-                    ICRA 2024 Workshop on Resilient Off-Road Autonomy</td>
-                </tr>
-                <tr>
-                  <td class="nd">04/2024</td>
-                  <td class="ni">Invited to review for ICRA 2024 Workshop on Resilient Off-Road Autonomy</td>
-                </tr>
-                <tr>
-                  <td class="nd">03/2023</td>
-                  <td class="ni"><span style="font-weight:bold;color:#B8860B">Awarded</span> the National Science Founation Graduate Research Fellowship (NSF GRFP)</td>
-                </tr>
+                {% endfor %}
               </table>
+              </div>
+              {% if site.data.news.size > 0 %}
+              <span class="news-toggle" id="news-toggle" onclick="toggleNews()">Expand all ▾</span>
+              {% endif %}
               </p>
             </td>
           </tr>
         </table>
 
+        <!-- Tabs: Research / Mentoring -->
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+          <tr>
+            <td style="padding:2.5% 2.5% 0 2.5%;width:100%;vertical-align:middle">
+              <div class="tab-bar">
+                <button class="tab-btn active" id="tab-research" onclick="showTab('research')">Research</button>
+                <button class="tab-btn" id="tab-education" onclick="showTab('education')">Education</button>
+                <button class="tab-btn" id="tab-mentoring" onclick="showTab('mentoring')">Mentoring</button>
+              </div>
+            </td>
+          </tr>
+        </table>
+
+        <div class="tab-panel active" id="panel-research">
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
           <tr>
             <td style="padding:2.5%;width:100%;vertical-align:middle">
-              <h2>Research</h2>
               <p>
-                Animals need only to observe a behavior a handful of times before imitating them through experience.
-                However, current machine learning methods require orders of magnitude more data to imitate a demonstation. 
-                I am interested in methods which enable robots to attain the same level of efficiency and robustness as animals.
+                <!-- Based on my experience in field robotics, three pillars  -->
+                As we invite robots into places we live and work, I aim to enable them with the same level of efficiency, adaptability, and robustness as humans and animals in these <b>unstructured, real-world environments</b>.
+                My PhD research focuses on resolving three major challenges I experienced firsthand during my time in field robotics:
+                <ol>
+                  <li>Rewards and objectives can be highly domain-specific or impossible to design.<br>→ Robots should be capable of learning from human demonstration.</li>
+                  <br>
+                  <li>The diversity of the natural world tends to render generalization of static, pre-trained features unlikely <br>→ Robots should be capable of reasoning when it inevitably finds itself in an unfamiliar situation.</li>
+                  <br>
+                  <li>Most &mdash; if not all &mdash; problems arose at the perception-control interface where hand-designed abstractions were enforced.<br>→ Robots should be trained end-to-end as engineering distinctions and modules blur in challenging settings.</li>
+                </ol>
               </p>
             </td>
           </tr>
@@ -203,11 +334,20 @@
           {% for post in site.posts %}
           {% for cat in post.categories %}
           {% if cat == 'research' %}
-          <tr>
-            <td style="padding:2.5%;width:33%;vertical-align:middle;min-width:120px">
-              <img src="{{post.image}}" alt="project image" style="width:auto; height:auto; max-width:100%;" />
+          {% comment %} Representative papers (listed in _data/representative.yml) get a yellow highlight. {% endcomment %}
+          {% if site.data.representative contains post.slug %}
+            {% assign row_bg = 'background-color:#fff8c4;' %}
+          {% else %}
+            {% assign row_bg = '' %}
+          {% endif %}
+          <tr style="{{ row_bg }}">
+            <td style="padding:2.5%;width:33%;vertical-align:middle;min-width:120px;{{ row_bg }}">
+              <span class="img-wrap">
+                <img src="{{post.image}}" alt="project image" style="width:auto; height:auto; max-width:100%;" />
+                {% if post.stars %}<a class="gh-stars gh-tag" href="https://github.com/{{ post.stars }}" data-repo="{{ post.stars }}" title="GitHub stars">★ …</a>{% endif %}
+              </span>
             </td>
-            <td style="padding:2.5%;width:100%;vertical-align:middle">
+            <td style="padding:2.5%;width:100%;vertical-align:middle;{{ row_bg }}">
               <h3>{{post.title}}</h3>
               <br>
               {{post.authors}}
@@ -278,6 +418,108 @@
           {% endfor %}
           {% endfor %}
         </table>
+        </div><!-- /panel-research -->
+
+        <!-- Mentoring tab content. Mentoring projects are defined in _data/mentoring.yml -->
+        <div class="tab-panel" id="panel-mentoring">
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+          <tr>
+            <td style="padding:2.5%;width:100%;vertical-align:middle">
+              <p>
+                Robotics research is inherently collaborative, and I'm fortunate to work with and mentor so many talented students. Hands-on robotics experience is invaluable, and I'm grateful to be able to provide opportunities for students to gain experience.
+              </p>
+            </td>
+          </tr>
+        </table>
+
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+          {% for item in site.data.mentoring %}
+          <tr>
+            {% if item.image %}
+            <td style="padding:2.5%;width:33%;vertical-align:middle;min-width:120px">
+              <span class="img-wrap">
+                <img src="{{ item.image }}" alt="project image" style="width:auto; height:auto; max-width:100%;" />
+                {% if item.stars %}<a class="gh-stars gh-tag" href="https://github.com/{{ item.stars }}" data-repo="{{ item.stars }}" title="GitHub stars">★ …</a>{% endif %}
+              </span>
+            </td>
+            {% endif %}
+            <td style="padding:2.5%;width:100%;vertical-align:middle"{% unless item.image %} colspan="2"{% endunless %}>
+              <h3>{{ item.project }}</h3>
+              {% if item.mentee %}<br>{{ item.mentee }}{% endif %}
+              {% if item.role %}<br><em>{{ item.role }}</em>{% endif %}
+              {% if item.links %}
+              <br>
+              {% for link in item.links %}{% unless forloop.first %} / {% endunless %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}
+              {% endif %}
+              {% if item.description %}{{ item.description | markdownify }}{% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+
+        <!-- Mentored students photo grid — roster defined in _data/students.yml -->
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+          <tr>
+            <td style="padding:2.5%;width:100%;vertical-align:middle">
+              {% for group in site.data.students %}
+              <h4 style="margin:14px 0 2px 0;">{{ group.level }}</h4>
+              <div class="student-grid">
+                {% for s in group.students %}
+                <div class="student">
+                  {% if s.image %}
+                  <img src="{{ s.image }}" alt="{{ s.name }}" />
+                  {% else %}
+                  {% assign nm = s.name | split: ' ' %}
+                  <span class="avatar">{{ nm.first | slice: 0 }}{{ nm.last | slice: 0 }}</span>
+                  {% endif %}
+                  <span class="sname">{{ s.name }}</span>
+                  {% if s.to %}<span class="sto">{{ s.to }}</span>{% endif %}
+                </div>
+                {% endfor %}
+              </div>
+              {% endfor %}
+            </td>
+          </tr>
+        </table>
+        </div><!-- /panel-mentoring -->
+
+        <!-- Education tab content. Education entries are defined in _data/education.yml -->
+        <div class="tab-panel" id="panel-education">
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+          <tr>
+            <td style="padding:2.5%;width:100%;vertical-align:middle">
+              <p>
+                Advancing automation can also mean unintentionally displacing workers and their dependents. As a researcher, I believe in responsibly broadening access, education, and resources in robotics and AI to support inclusive transitions into a future of automation.
+              </p>
+            </td>
+          </tr>
+        </table>
+
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+          {% for item in site.data.education %}
+          <tr>
+            {% if item.image %}
+            <td style="padding:2.5%;width:33%;vertical-align:middle;min-width:120px">
+              <span class="img-wrap">
+                <img src="{{ item.image }}" alt="project image" style="width:auto; height:auto; max-width:100%;" />
+                {% if item.stars %}<a class="gh-stars gh-tag" href="https://github.com/{{ item.stars }}" data-repo="{{ item.stars }}" title="GitHub stars">★ …</a>{% endif %}
+              </span>
+            </td>
+            {% endif %}
+            <td style="padding:2.5%;width:100%;vertical-align:middle"{% unless item.image %} colspan="2"{% endunless %}>
+              <h3>{{ item.project }}</h3>
+              {% if item.mentee %}<br>{{ item.mentee }}{% endif %}
+              {% if item.role %}<br><em>{{ item.role }}</em>{% endif %}
+              {% if item.links %}
+              <br>
+              {% for link in item.links %}{% unless forloop.first %} / {% endunless %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}
+              {% endif %}
+              {% if item.description %}{{ item.description | markdownify }}{% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+        </div><!-- /panel-education -->
 
         <!-- <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
           <tr>
@@ -456,6 +698,9 @@
           <tr>
             <td style="padding:0px">
               <br>
+              <p style="text-align:center;font-size:small;color:#888;">
+                Last updated {{ site.time | date: "%B %-d, %Y" }}
+              </p>
               <p style="text-align:center;font-size:small;">
                 Forked from <a style="font-size:small;" href="https://github.com/leonidk/new_website">Leonid Keselman's Website</a>
               </p>
