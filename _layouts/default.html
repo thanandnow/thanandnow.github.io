@@ -120,6 +120,28 @@
       color: #888;
       line-height: 1.2;
     }
+    /* Research-agenda challenges: the implication callout is revealed on hover ("pan over"). */
+    .agenda > li {
+      cursor: help;
+    }
+    .agenda-callout {
+      max-height: 0;
+      margin: 0;
+      padding: 0 12px;
+      opacity: 0;
+      overflow: hidden;
+      background: #f7f7f5;
+      border-left: 3px solid #f09228;
+      border-radius: 0 4px 4px 0;
+      transition: max-height 0.25s ease, opacity 0.25s ease, padding 0.25s ease, margin 0.25s ease;
+    }
+    .agenda > li:hover .agenda-callout,
+    .agenda > li:focus-within .agenda-callout {
+      max-height: 200px;
+      margin: 8px 0 0 0;
+      padding: 8px 12px;
+      opacity: 1;
+    }
     /* Tabs (Research / Mentoring) */
     .tab-bar {
       border-bottom: 1px solid #ddd;
@@ -315,14 +337,14 @@
             <td style="padding:2.5%;width:100%;vertical-align:middle">
               <p>
                 <!-- Based on my experience in field robotics, three pillars  -->
-                As we invite robots into places we live and work, I aim to enable them with the same level of efficiency, adaptability, and robustness as humans and animals in these <b>unstructured, real-world environments</b>.
-                My PhD research focuses on resolving three major challenges I experienced firsthand during my time in field robotics:
-                <ol>
-                  <li>Rewards and objectives can be highly domain-specific or impossible to design.<br>→ Robots should be capable of learning from human demonstration.</li>
+                As we invite robots into places we live and work, I aim to enable them with the same level of efficiency, adaptability, and robustness as humans through <strong>natural-world supervision</strong> for real-world robot learning.
+                This agenda focuses on resolving three challenges experienced firsthand in field robotics bottlenecking scalable autonomy:
+                <ol class="agenda">
+                  <li><strong>Intuitive Task Understanding.</strong> Rewards and objectives can be highly domain-specific or impossible, especially for end-users, to design.<div class="agenda-callout">Robots should be capable of inferring goals from observations of the world and their users.</div></li>
                   <br>
-                  <li>The diversity of the natural world tends to render generalization of static, pre-trained features unlikely <br>→ Robots should be capable of reasoning when it inevitably finds itself in an unfamiliar situation.</li>
+                  <li><strong>Continual Physical Understanding.</strong> The diversity of the natural world tends to render naive generalization of static, pre-trained features improbable and dangerous.<div class="agenda-callout">Robots should be capable of reasoning and learning when it inevitably finds itself in an unfamiliar situation.</div></li>
                   <br>
-                  <li>Most &mdash; if not all &mdash; problems arose at the perception-control interface where hand-designed abstractions were enforced.<br>→ Robots should be trained end-to-end as engineering distinctions and modules blur in challenging settings.</li>
+                  <li><strong>End-to-End Learning</strong>. (Not end-to-end <i>acting</i>!) Most, if not all, problems arose at the perception-control interface where hand-designed abstractions were enforced.<div class="agenda-callout">Robots should be trained end-to-end as engineering distinctions and modules blur in challenging settings.</div></li>
                 </ol>
               </p>
             </td>

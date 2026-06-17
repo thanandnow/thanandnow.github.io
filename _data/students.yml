@@ -11,7 +11,7 @@
 - level: "Master's students"
   students:
     - name: "Siyang Shen"
-      to: "→ Paxini"
+      to: "→ Robot Learning Engineer, Humanoid Robot Sahgnhai Co., Ltd."
       image: /images/students/siyang-shen.jpg
     - name: "Anubhav Vishwakarma"
       to: "→ Field AI"
@@ -23,16 +23,17 @@
 
 - level: "Undergraduate students"
   students:
+    - name: "Caleb Hsu"
+      image: /images/students/caleb-hsu.jpg
     - name: "Laura Wang"
+      image: /images/students/laura-wang.jpg
     - name: "Urvi Rutia"
+      image: /images/students/urvi-rutia.jpg
     - name: "Bhaumik Mehta"
       image: /images/students/bhaumik-mehta.jpg
-    - name: "Bryan Xu"
-      image: /images/students/bryan-xu.jpg
     - name: "Yanda Bao"
     - name: "Sidharth Rajagopal"
       image: /images/students/sidharth-rajagopal.jpg
-    - name: "Gabe Guo"
     - name: "Alyssa Giedd"
       to: "→ Ph.D. at University of Washington"
 
