@@ -14,25 +14,27 @@
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
   <style>
+    /* Abstract: first sentence shows by default; panning over anywhere on the text side
+       (title, authors, links, abstract) reveals the rest inline, continuing the same paragraph. */
     .abstract-toggle {
-      cursor: pointer;
       color: #1772d0;
-      text-decoration: underline;
+      font-size: small;
     }
-    .abstract-toggle:hover {
-      color: #f09228;
+    .abstract-rest {
+      display: none;
     }
-    .full-abstract {
-      display: none !important;
-    }
-    .full-abstract.show {
-      display: inline !important;
-    }
-    .truncated-abstract {
+    .abs-trigger:hover .abstract-rest,
+    .abs-trigger:focus-within .abstract-rest {
       display: inline;
+      animation: abstractFade 0.4s ease;
     }
-    .truncated-abstract.hide {
-      display: none !important;
+    .abs-trigger:hover .abstract-toggle,
+    .abs-trigger:focus-within .abstract-toggle {
+      display: none;
+    }
+    @keyframes abstractFade {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
     .news-scroll {
       max-height: 230px;
@@ -120,9 +122,83 @@
       color: #888;
       line-height: 1.2;
     }
-    /* Research-agenda challenges: the implication callout is revealed on hover ("pan over"). */
+    /* Accent linking "new attention" in the stance to the three pillar adjectives. */
+    .accent {
+      color: #f09228;
+    }
+    /* Pillar adjective (e.g. "Natural"): hidden until you hover/focus/pin the pillar. */
+    .agenda > li .accent {
+      max-width: 0;
+      opacity: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      display: inline-block;
+      vertical-align: bottom;
+      transition: max-width 0.35s ease, opacity 0.35s ease, margin-right 0.35s ease;
+      margin-right: 0;
+    }
+    .agenda > li:hover .accent,
+    .agenda > li:focus-within .accent,
+    .agenda > li.pinned .accent {
+      max-width: 12em;
+      opacity: 1;
+      margin-right: 0.25em;
+    }
+    /* Project row: hover the left thumbnail to reflow text full-width and drop an enlarged image below. */
+    .proj {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+    .proj-thumb {
+      flex: 0 0 33%;
+      max-width: 33%;
+      padding-right: 2.5%;
+      box-sizing: border-box;
+      transition: flex-basis 0.4s ease, max-width 0.4s ease, opacity 0.3s ease, padding 0.4s ease;
+      overflow: hidden;
+    }
+    .proj-body {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+    .proj-big {
+      flex: 0 0 100%;
+      max-width: 100%;
+      max-height: 0;
+      margin-top: 0;
+      opacity: 0;
+      overflow: hidden;
+      text-align: center;
+      transition: max-height 0.45s ease, opacity 0.45s ease, margin-top 0.45s ease;
+    }
+    .proj-big img {
+      max-width: 100%;
+      height: auto;
+    }
+    /* When expanded (JS adds .expanded on entering the thumbnail): collapse the thumbnail,
+       let the body take full width, and reveal the enlarged image below. */
+    .proj.expanded .proj-thumb {
+      flex-basis: 0;
+      max-width: 0;
+      padding-right: 0;
+      opacity: 0;
+    }
+    .proj.expanded .proj-body {
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+    .proj.expanded .proj-big {
+      max-height: 1200px;
+      margin-top: 14px;
+      opacity: 1;
+    }
+    .proj-thumb .img-wrap {
+      cursor: zoom-in;
+    }
+    /* Research-agenda challenges: the implication callout reveals on hover ("pan over"); click to pin open. */
     .agenda > li {
-      cursor: help;
+      cursor: pointer;
     }
     .agenda-callout {
       max-height: 0;
@@ -136,7 +212,8 @@
       transition: max-height 0.25s ease, opacity 0.25s ease, padding 0.25s ease, margin 0.25s ease;
     }
     .agenda > li:hover .agenda-callout,
-    .agenda > li:focus-within .agenda-callout {
+    .agenda > li:focus-within .agenda-callout,
+    .agenda > li.pinned .agenda-callout {
       max-height: 200px;
       margin: 8px 0 0 0;
       padding: 8px 12px;
@@ -174,31 +251,6 @@
   </style>
 
   <script>
-    function toggleAbstract(id) {
-      console.log('Toggling abstract for:', id);
-      const truncated = document.getElementById('truncated-' + id);
-      const full = document.getElementById('full-' + id);
-      
-      console.log('Truncated element:', truncated);
-      console.log('Full element:', full);
-      
-      if (truncated && full) {
-        if (full.classList.contains('show')) {
-          // Hide full, show truncated
-          full.classList.remove('show');
-          truncated.classList.remove('hide');
-          console.log('Showing truncated');
-        } else {
-          // Hide truncated, show full
-          truncated.classList.add('hide');
-          full.classList.add('show');
-          console.log('Showing full');
-        }
-      } else {
-        console.error('Could not find elements for ID:', id);
-      }
-    }
-
     // Collapsed: news sits in a fixed-height scroll box (scroll for older items).
     // Expanded: drop the height limit so the full list shows inline.
     function toggleNews() {
@@ -337,14 +389,17 @@
             <td style="padding:2.5%;width:100%;vertical-align:middle">
               <p>
                 <!-- Based on my experience in field robotics, three pillars  -->
-                As we invite robots into places we live and work, I aim to enable them with the same level of efficiency, adaptability, and robustness as humans through <strong>natural-world supervision</strong> for real-world robot learning.
-                This agenda focuses on resolving three challenges experienced firsthand in field robotics bottlenecking scalable autonomy:
+                As we invite robots into places we live and work, my research aims to realize <b>natural robot learning</b> &mdash; experiential improvement from signals accessible to or communicable by animals and humans.
+                I believe these methods will enable more sustainably scalable autonomy for all embodiments, not only those which we can tele-operate, model, or simulate.
+                <br><br>
+                
+                This position is largely motivated by my experience in developing off-road self-driving (now <a href="https://www.overland.ai/">Overland AI</a>), where I felt three long-standing pillars of engineering bottlenecked scalable, unstructured autonomy and deserves <span class="accent">new attention</span>:
                 <ol class="agenda">
-                  <li><strong>Intuitive Task Understanding.</strong> Rewards and objectives can be highly domain-specific or impossible, especially for end-users, to design.<div class="agenda-callout">Robots should be capable of inferring goals from observations of the world and their users.</div></li>
+                  <li onclick="this.classList.toggle('pinned')"><strong><span class="accent">Natural</span> Task Specification.</strong> Rewards and objectives can be highly domain-specific or impossible, especially for end-users, to design then communicate.<div class="agenda-callout">Robots should be capable of inferring goals from observations of the world and their users.</div></li>
                   <br>
-                  <li><strong>Continual Physical Understanding.</strong> The diversity of the natural world tends to render naive generalization of static, pre-trained features improbable and dangerous.<div class="agenda-callout">Robots should be capable of reasoning and learning when it inevitably finds itself in an unfamiliar situation.</div></li>
+                  <li onclick="this.classList.toggle('pinned')"><strong><span class="accent">Continual</span> Physical Understanding.</strong> The diversity of the natural world tends to render naive generalization of static, hand-designed or pre-trained features unreliable and dangerous.<div class="agenda-callout">Robots should be capable of reasoning, then learning, when it inevitably finds itself in an unfamiliar situation.</div></li>
                   <br>
-                  <li><strong>End-to-End Learning</strong>. (Not end-to-end <i>acting</i>!) Most, if not all, problems arose at the perception-control interface where hand-designed abstractions were enforced.<div class="agenda-callout">Robots should be trained end-to-end as engineering distinctions and modules blur in challenging settings.</div></li>
+                  <li onclick="this.classList.toggle('pinned')"><strong><span class="accent">End-to-End</span> Abstractions</strong>. Many problems on deployment arose and recurred at the interfaces between sub-system modules (e.g. perception and control) where hand-designed abstractions were enforced or constrained.<div class="agenda-callout">Robots should learn (not <i>act</i>!) end-to-end as engineering distinctions and modules blur in challenging settings.</div></li>
                 </ol>
               </p>
             </td>
@@ -363,13 +418,15 @@
             {% assign row_bg = '' %}
           {% endif %}
           <tr style="{{ row_bg }}">
-            <td style="padding:2.5%;width:33%;vertical-align:middle;min-width:120px;{{ row_bg }}">
-              <span class="img-wrap">
-                <img src="{{post.image}}" alt="project image" style="width:auto; height:auto; max-width:100%;" />
-                {% if post.stars %}<a class="gh-stars gh-tag" href="https://github.com/{{ post.stars }}" data-repo="{{ post.stars }}" title="GitHub stars">★ …</a>{% endif %}
-              </span>
-            </td>
-            <td style="padding:2.5%;width:100%;vertical-align:middle;{{ row_bg }}">
+            <td style="padding:2.5%;vertical-align:middle;{{ row_bg }}">
+            <div class="proj" onmouseleave="this.classList.remove('expanded')">
+              <div class="proj-thumb" onmouseenter="this.closest('.proj').classList.add('expanded')" title="Hover to enlarge">
+                <span class="img-wrap">
+                  <img src="{{post.image}}" alt="project image" style="width:auto; height:auto; max-width:100%;" />
+                  {% if post.stars %}<a class="gh-stars gh-tag" href="https://github.com/{{ post.stars }}" data-repo="{{ post.stars }}" title="GitHub stars">★ …</a>{% endif %}
+                </span>
+              </div>
+              <div class="proj-body abs-trigger">
               <h3>{{post.title}}</h3>
               <br>
               {{post.authors}}
@@ -414,26 +471,25 @@
               <!-- <br><span style="color:red;font-weight:bold;">{{ post.award | markdownify | remove: '<p>' | remove: '</p>' }}</span> -->
               <br><span style="color:red;">{{ post.award | markdownify | remove: '<p>' | remove: '</p>' }}</span>
               {% endif %}
-              {% assign word_limit = 50 %}
               {% assign cleaned_excerpt = post.excerpt | replace: '<p>', '' | replace: '</p>', '' %}
-              {% assign truncated_content = cleaned_excerpt | truncatewords: word_limit, '' %}
-              {% assign excerpt_words = cleaned_excerpt | strip_html | number_of_words %}
-              {% assign post_id = post.title | slugify %}
+              {% comment %} Show first sentence; rest expands on hover. Normalize newlines and protect e.g./i.e. so the sentence split holds. {% endcomment %}
+              {% assign norm = cleaned_excerpt | newline_to_br | replace: '<br />', ' ' | replace: 'e.g.', 'e!g!' | replace: 'i.e.', 'i!e!' %}
+              {% assign first_protected = norm | split: '. ' | first %}
+              {% assign rest_protected = norm | remove_first: first_protected | remove_first: '. ' %}
+              {% assign first_sentence = first_protected | replace: 'e!g!', 'e.g.' | replace: 'i!e!', 'i.e.' %}
+              {% assign rest = rest_protected | replace: 'e!g!', 'e.g.' | replace: 'i!e!', 'i.e.' %}
               <p>
-                <!-- Debug info: Excerpt words: {{ excerpt_words }}, Word limit: {{ word_limit }} -->
-                {% if excerpt_words > word_limit %}
-                  <span id="truncated-{{ post_id }}" class="truncated-abstract">
-                    {{ truncated_content }}
-                    <span class="abstract-toggle" onclick="toggleAbstract('{{ post_id }}')">[...]</span>
-                  </span>
-                  <span id="full-{{ post_id }}" class="full-abstract">
-                    {{ cleaned_excerpt }}
-                    <span class="abstract-toggle" onclick="toggleAbstract('{{ post_id }}')">[hide]</span>
-                  </span>
+                {% if rest != blank %}
+                <span class="abstract" tabindex="0">{{ first_sentence }}. <span class="abstract-toggle">[...]</span><span class="abstract-rest">{{ rest }}</span></span>
                 {% else %}
                   {{ cleaned_excerpt }}
                 {% endif %}
               </p>
+              </div><!-- /proj-body -->
+              <div class="proj-big">
+                <img src="{{post.image}}" alt="{{post.title}} preview" />
+              </div>
+            </div><!-- /proj -->
             </td>
           </tr>
           {% endif %}
@@ -448,7 +504,7 @@
           <tr>
             <td style="padding:2.5%;width:100%;vertical-align:middle">
               <p>
-                Robotics research is inherently collaborative, and I'm fortunate to work with and mentor so many talented students. Hands-on robotics experience is invaluable, and I'm grateful to be able to provide opportunities for students to gain experience.
+                I believe robotics research is necessarily collaborative, and I'm fortunate to work with and mentor so many talented students. Hands-on experience is invaluable, and I'm grateful to be able to provide these opportunities for students.
               </p>
             </td>
           </tr>
@@ -511,7 +567,7 @@
           <tr>
             <td style="padding:2.5%;width:100%;vertical-align:middle">
               <p>
-                Advancing automation can also mean unintentionally displacing workers and their dependents. As a researcher, I believe in responsibly broadening access, education, and resources in robotics and AI to support inclusive transitions into a future of automation.
+                Advancing automation can also mean displacing workers and those who depend on them as providers. I believe in responsibly broadening access, education, and resources in robotics and AI to support inclusive transitions into a future of automation.
               </p>
             </td>
           </tr>
@@ -561,7 +617,7 @@
             <td style="padding:2.5%;width:33%;vertical-align:middle;min-width:120px">
               <img src="{{post.image}}" alt="project image" style="width:auto; height:auto; max-width:100%;" />
             </td>
-            <td style="padding:2.5%;width:100%;vertical-align:middle">
+            <td class="abs-trigger" style="padding:2.5%;width:100%;vertical-align:middle">
               <h3>{{post.title}}</h3>
               <br>
               <!-- <em>{{post.categories}} {{post.course}}</em> -->
@@ -622,22 +678,16 @@
               <br><span style="color:red;font-weight:bold;">{{ post.award | markdownify | remove: '<p>' | remove: '</p>' }}</span>
               {% endif %}
               <p></p>
-              {% assign word_limit = 50 %}
               {% assign cleaned_excerpt = post.excerpt | replace: '<p>', '' | replace: '</p>', '' %}
-              {% assign truncated_content = cleaned_excerpt | truncatewords: word_limit, '' %}
-              {% assign excerpt_words = cleaned_excerpt | strip_html | number_of_words %}
-              {% assign post_id = post.title | slugify | append: '-other' %}
+              {% comment %} Show first sentence; rest expands on hover. Normalize newlines and protect e.g./i.e. so the sentence split holds. {% endcomment %}
+              {% assign norm = cleaned_excerpt | newline_to_br | replace: '<br />', ' ' | replace: 'e.g.', 'e!g!' | replace: 'i.e.', 'i!e!' %}
+              {% assign first_protected = norm | split: '. ' | first %}
+              {% assign rest_protected = norm | remove_first: first_protected | remove_first: '. ' %}
+              {% assign first_sentence = first_protected | replace: 'e!g!', 'e.g.' | replace: 'i!e!', 'i.e.' %}
+              {% assign rest = rest_protected | replace: 'e!g!', 'e.g.' | replace: 'i!e!', 'i.e.' %}
               <p>
-                <!-- Debug info: Excerpt words: {{ excerpt_words }}, Word limit: {{ word_limit }} -->
-                {% if excerpt_words > word_limit %}
-                  <span id="truncated-{{ post_id }}" class="truncated-abstract">
-                    {{ truncated_content }}
-                    <span class="abstract-toggle" onclick="toggleAbstract('{{ post_id }}')">[...]</span>
-                  </span>
-                  <span id="full-{{ post_id }}" class="full-abstract">
-                    {{ cleaned_excerpt }}
-                    <span class="abstract-toggle" onclick="toggleAbstract('{{ post_id }}')">[hide]</span>
-                  </span>
+                {% if rest != blank %}
+                <span class="abstract" tabindex="0">{{ first_sentence }}. <span class="abstract-toggle">[...]</span><span class="abstract-rest">{{ rest }}</span></span>
                 {% else %}
                   {{ cleaned_excerpt }}
                 {% endif %}

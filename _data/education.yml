@@ -18,7 +18,7 @@
   role: "CSE 494 capstone project, University of Washington, 2026"
   image: /images/depth-elev-teaser.png
   description: |
-    Eliminates dependency on an inaccessible motion capture system by developing a depth-image based navigation policy in Wheeled Lab. A Sim2Real project in just two quarters! Well done, Laura!
+    Eliminates subtle dependency on an inaccessible motion capture system by developing a depth-image based navigation policy in Wheeled Lab. A Sim2Real project in just two quarters! Well done, Laura!
   links:
     - title: poster
       url: /pdfs/depth-elev.pdf
@@ -28,12 +28,12 @@
   image: /images/wl-teaser.gif
   stars: UWRobotLearning/WheeledLab
   description: |
-    Created an open-source education platform for students new to reinforcement
+    Created an open-source education platform and content for students new to reinforcement
     learning in robotics, and advise undergraduate teams beginning in robotics by
     mentoring extracurricular Sim2Real projects.
     <br><br>
     If you're interested in RL and robotics but don't know where to start, consider starting with us!
-    There are currently 12 students with self-driven Sim2Real projects spanning pre-trained encoders, Real2Sim, depth-based Sim2Real, high-performance visual racing, and more!
+    There are currently 8 students with self-driven Sim2Real projects spanning pre-trained encoders, Real2Sim, depth-based Sim2Real, high-performance visual racing, and more!
   links:
     - title: website
       url: https://uwrobotlearning.github.io/WheeledLab/

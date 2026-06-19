@@ -16,14 +16,17 @@ arxiv: https://arxiv.org/abs/2502.07380.pdf
 website: https://uwrobotlearning.github.io/WheeledLab
 poster: /images/wheeledlab-poster.png
 other:
-    title: NVIDIA spotlight
+    title: NVIDIA blog
     link: https://blogs.nvidia.com/blog/national-robotics-week-2025/#wheeled-lab
 other2:
     title: Q&A video
     link: https://www.youtube.com/watch?v=Y4b-cz2xB1w
 other3:
     title: tutorials
-    link: https://lycheeai-hub.com/isaac-lab/projects/wheeled-lab
+    link: https://uwrobotlearning.github.io/WheeledLab/overview.html
+other4:
+    title: WL@UW
+    link: https://uwrobotlearning.github.io/WheeledLab/wlatuw.html
 ---
 Reinforcement Learning (RL) has been pivotal in recent robotics milestones and is poised to play a prominent role in the future.
 However, these advances can rely on proprietary simulators, expensive hardware, and a daunting range of tools and skills. As a result, broader communities are disconnecting from the state-of-the-art; education curricula are poorly equipped to teach indispensable modern robotics skills involving hardware, deployment, and iterative development.
