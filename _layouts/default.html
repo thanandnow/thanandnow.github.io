@@ -24,12 +24,14 @@
       display: none;
     }
     .abs-trigger:hover .abstract-rest,
-    .abs-trigger:focus-within .abstract-rest {
+    .abs-trigger:focus-within .abstract-rest,
+    .proj.expanded .abstract-rest {
       display: inline;
       animation: abstractFade 0.4s ease;
     }
     .abs-trigger:hover .abstract-toggle,
-    .abs-trigger:focus-within .abstract-toggle {
+    .abs-trigger:focus-within .abstract-toggle,
+    .proj.expanded .abstract-toggle {
       display: none;
     }
     @keyframes abstractFade {
@@ -155,7 +157,7 @@
       max-width: 33%;
       padding-right: 2.5%;
       box-sizing: border-box;
-      transition: flex-basis 0.4s ease, max-width 0.4s ease, opacity 0.3s ease, padding 0.4s ease;
+      transition: flex-basis 0.6s ease, max-width 0.6s ease, opacity 0.45s ease, padding 0.6s ease;
       overflow: hidden;
     }
     .proj-body {
@@ -170,7 +172,7 @@
       opacity: 0;
       overflow: hidden;
       text-align: center;
-      transition: max-height 0.45s ease, opacity 0.45s ease, margin-top 0.45s ease;
+      transition: max-height 0.68s ease, opacity 0.68s ease, margin-top 0.68s ease;
     }
     .proj-big img {
       max-width: 100%;
