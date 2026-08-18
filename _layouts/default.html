@@ -250,6 +250,13 @@
     .tab-panel.active {
       display: block;
     }
+    /* Bio callout: prospective-student note, set off with a light background. */
+    .bio-note {
+      background: #fdf6e8;
+      border-left: 3px solid #f09228;
+      border-radius: 0 4px 4px 0;
+      padding: 8px 12px;
+    }
   </style>
 
   <script>
@@ -318,6 +325,9 @@
               </p> -->
               <p>
                 Prior to UW, I completed my B.S. in Aerospace Engineering and B.S. in Computer Science at the University of Maryland, College Park. During my undergrad, I worked with Glen Henshaw and Patrick Wensing while at the Naval Research Laboratory in Washington, D.C.
+              </p>
+              <p class="bio-note">
+                Masters/Undergraduates interested in working with me, please sign up for a time to chat <a href="https://calendar.app.google/SkvNckDqA8j3KS1n7">here</a>. I am unlikely to respond to emails due to volume. If you would like to work on Wheeled Lab, please contact <a href="https://uwrobotlearning.github.io/WheeledLab/wlatuw.html">WL@UW</a> directly.
               </p>
               {% comment %} CV "updated" date is read automatically from the pdfs/CV.pdf file's modified time. {% endcomment %}
               {% assign cv_file = site.static_files | where: "path", "/pdfs/CV.pdf" | first %}
