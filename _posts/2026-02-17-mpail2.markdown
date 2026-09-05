@@ -8,9 +8,10 @@ image: /images/mpail2-vis.gif
 categories: research
 author: "Tyler Han"
 authors: "<strong>Tyler Han</strong>,  Bat Nemekhbold, Siyang Shen, Rohan Baijal, Richard Ebock, Harine Ravichandran, Sanghun Jung, Kevin Huang, Byron Boots"
+venue: Conference on Robot Learning (CoRL)
 arxiv: https://arxiv.org/pdf/2602.24121
-# website: https://uwrobotlearning.github.io/mpail2/
-website: https://mpail2.github.io/
+website: https://uwrobotlearning.github.io/mpail2/
+# website: https://mpail2.github.io/
 code: https://github.com/UWRobotLearning/mpail2/
 ---
 Current methods in robot learning are fundamentally bottlenecked by one or more of:

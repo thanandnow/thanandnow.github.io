@@ -16,15 +16,15 @@
 #   link:      <a href="https://example.com">link text</a>
 # =============================================================================
 
-- date: "06/2026"
+- date: "09/2026"
   html: |
-    New MPAIL2 website is live! Learn more about real-world online world modeling and IRL <a href="https://mpail2.github.io/">here</a>!
+    "Online World Modeling Enables Real-World Inverse Reinforcement Learning from Observation" is <span style="font-weight:bold;color:green">accepted to</span> CoRL 2026! Learn more about real-world online world modeling and Inverse RL <a href="https://uwrobotlearning.github.io/mpail2/">here</a>!
 
 - date: "05/2026"
   html: |
     Invited speaker at Global Innovation Exchange (GIX) UW
 
-- date: "09/2025"
+- date: "01/2026"
   html: |
     "Model Predictive Adversarial Imitation Learning for Planning from Observation" is <span style="font-weight:bold;color:green">accepted to</span> ICLR 2026!
 
@@ -38,12 +38,9 @@
 
 - date: "04/2025"
   html: |
-    I'm hosted by <a href="https://www.youtube.com/@LycheeAI">LycheeAI</a> to answer community questions about <a href="https://uwrobotlearning.github.io/WheeledLab/"><strong>Wheeled Lab</strong></a>. Check it out <a href="https://www.youtube.com/watch?v=Y4b-cz2xB1w">here</a>!
-    I'm also hosted by <a href="https://www.youtube.com/@madeautonomous">The Robotics Club</a> in a follow-up interview about my experience as a PhD student. Find that <a href="https://www.youtube.com/watch?v=39NB43yLAs0">here</a>.
-
-- date: "04/2025"
-  html: |
     <a href="https://uwrobotlearning.github.io/WheeledLab/"><strong>Wheeled Lab</strong></a> is featured in <a href="https://blogs.nvidia.com/blog/national-robotics-week-2025/#wheeled-lab">NVIDIA's blog</a>!
+    I'm hosted by <a href="https://www.youtube.com/@LycheeAI">LycheeAI</a> to answer community questions about the effort <a href="https://www.youtube.com/watch?v=Y4b-cz2xB1w">here</a>!
+    I'm also hosted by <a href="https://www.youtube.com/@madeautonomous">The Robotics Club</a> in a follow-up interview about my experience as a PhD student <a href="https://www.youtube.com/watch?v=39NB43yLAs0">here</a>.
 
 - date: "06/2025"
   html: |
@@ -59,7 +56,7 @@
 
 - date: "07/2024"
   html: |
-    I gave a talk at R:SS on "Model Predictive Control for Aggressive Driving Over Uneven Terrain". Watch it <a href="https://www.youtube.com/live/P0QLO1f86RU?t=20319s">here</a>.
+    I gave a talk at R:SS on "Model Predictive Control for Aggressive Driving Over Uneven Terrain" <a href="https://www.youtube.com/live/P0QLO1f86RU?t=20319s">here</a>.
 
 - date: "05/2024"
   html: |
