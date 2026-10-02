@@ -1,0 +1,85 @@
+{% comment %}
+  One publication row in the Research tab. Pass the post as `post`. By default the title spans
+  the row above the image and links out; pass `inline_title=true` to keep it plain, in the text column.
+{% endcomment %}
+{% assign post = include.post %}
+          <tr>
+            <td style="padding:{% if include.inline_title %}2.5%{% else %}1.2% 2.5%{% endif %};vertical-align:middle;">
+            {% unless include.inline_title %}<div class="pub-card">{% endunless %}
+            {% unless include.inline_title %}
+            {% assign title_link = post.website | default: post.arxiv %}
+            <h3 class="proj-title">{% if title_link %}<a href="{{ title_link }}">{{post.title}}</a>{% else %}{{post.title}}{% endif %}</h3>
+            {% endunless %}
+            <div class="proj">
+              <div class="proj-thumb" title="Hover to enlarge">
+                <span class="img-wrap">
+                  <img src="{{post.image}}" alt="project image" style="width:auto; height:auto; max-width:100%;" />
+                  {% if post.stars %}<a class="gh-stars gh-tag" href="https://github.com/{{ post.stars }}" data-repo="{{ post.stars }}" title="GitHub stars">★ …</a>{% endif %}
+                </span>
+              </div>
+              <div class="proj-body">
+              {% if include.inline_title %}
+              <h3>{{post.title}}</h3>
+              <br>
+              {% endif %}
+              {{post.authors}}
+
+              {% if post.venue %}
+              <br>
+              <em>{{post.venue}}</em>, {{ post.date | date: "%Y" }}
+              {% endif %}
+              <br>
+              {% if post.website %}
+              <a href="{{post.website}}">website</a> /
+              {% endif %}
+              {% if post.video %}
+              <a href="{{post.video}}">video</a> /
+              {% endif %}
+              {% if post.code %}
+              <a href="{{post.code}}">code</a> /
+              {% endif %}
+              {% if post.poster %}
+              <a href="{{post.poster}}">poster</a> /
+              {% endif %}
+              {% if post.slides %}
+              <a href="{{post.slides}}">slides</a> /
+              {% endif %}
+              {% if post.arxiv %}
+              <a href="{{post.arxiv}}">arXiv</a>
+              {% endif %}
+              {% assign printed_other = false %}
+              {% for i in (1..10) %}
+                {% if i == 1 %}
+                  {% assign other_key = 'other' %}
+                {% else %}
+                  {% assign other_key = 'other' | append: i %}
+                {% endif %}
+                {% assign other_item = post[other_key] %}
+                {% if other_item %}
+                {% if post.arxiv or printed_other %} / {% endif %}<a href="{{other_item.link}}">{{other_item.title}}</a>
+                {% assign printed_other = true %}
+                {% endif %}
+              {% endfor %}
+              {% if post.award %}
+              <!-- <br><span style="color:red;font-weight:bold;">{{ post.award | markdownify | remove: '<p>' | remove: '</p>' }}</span> -->
+              <br><span style="color:red;">{{ post.award | markdownify | remove: '<p>' | remove: '</p>' }}</span>
+              {% endif %}
+              {% assign cleaned_excerpt = post.excerpt | replace: '<p>', '' | replace: '</p>', '' %}
+              {% comment %} Show first sentence; rest expands on clicking [...]. Normalize newlines and protect e.g./i.e. so the sentence split holds. {% endcomment %}
+              {% assign norm = cleaned_excerpt | newline_to_br | replace: '<br />', ' ' | replace: 'e.g.', 'e!g!' | replace: 'i.e.', 'i!e!' %}
+              {% assign first_protected = norm | split: '. ' | first %}
+              {% assign rest_protected = norm | remove_first: first_protected | remove_first: '. ' %}
+              {% assign first_sentence = first_protected | replace: 'e!g!', 'e.g.' | replace: 'i!e!', 'i.e.' %}
+              {% assign rest = rest_protected | replace: 'e!g!', 'e.g.' | replace: 'i!e!', 'i.e.' %}
+              <p>
+                {% if rest != blank %}
+                <span class="abstract">{{ first_sentence }}. <span class="abstract-toggle" role="button" tabindex="0" onclick="toggleAbstract(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAbstract(this);}" >[...]</span><span class="abstract-rest">{{ rest }} <span class="abstract-less" role="button" tabindex="0" onclick="toggleAbstract(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAbstract(this);}" >[less]</span></span></span>
+                {% else %}
+                  {{ cleaned_excerpt }}
+                {% endif %}
+              </p>
+              </div><!-- /proj-body -->
+            </div><!-- /proj -->
+            {% unless include.inline_title %}</div><!-- /pub-card -->{% endunless %}
+            </td>
+          </tr>

@@ -14,24 +14,27 @@
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
   <style>
-    /* Abstract: first sentence shows by default; panning over anywhere on the text side
-       (title, authors, links, abstract) reveals the rest inline, continuing the same paragraph. */
-    .abstract-toggle {
+    /* Abstract: first sentence shows by default; clicking [...] reveals the rest inline,
+       continuing the same paragraph, and [less] collapses it again. */
+    .abstract-toggle,
+    .abstract-less {
       color: #1772d0;
       font-size: small;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .abstract-toggle:hover,
+    .abstract-less:hover {
+      color: #f09228;
     }
     .abstract-rest {
       display: none;
     }
-    .abs-trigger:hover .abstract-rest,
-    .abs-trigger:focus-within .abstract-rest,
-    .proj.expanded .abstract-rest {
+    .abstract.open .abstract-rest {
       display: inline;
       animation: abstractFade 0.4s ease;
     }
-    .abs-trigger:hover .abstract-toggle,
-    .abs-trigger:focus-within .abstract-toggle,
-    .proj.expanded .abstract-toggle {
+    .abstract.open .abstract-toggle {
       display: none;
     }
     @keyframes abstractFade {
@@ -146,54 +149,59 @@
       opacity: 1;
       margin-right: 0.25em;
     }
-    /* Project row: hover the left thumbnail to reflow text full-width and drop an enlarged image below. */
+    /* Project row: hovering the thumbnail zooms it in place as a floating layer over the text.
+       Nothing else moves, so the text never re-wraps and rows below stay put. */
     .proj {
       display: flex;
-      flex-wrap: wrap;
       align-items: flex-start;
+    }
+    /* Selected publications sit in light bordered cards. */
+    .pub-card {
+      border: 1px solid #e3e3e3;
+      border-radius: 8px;
+      padding: 14px 16px;
+      background: #fff;
+    }
+    .pub-card .proj-body > p:last-child {
+      margin-bottom: 0;
+    }
+    /* Title spans the full row above the thumbnail and text. */
+    .proj-title {
+      display: block;
+      margin: 0 0 8px 0;
+      font-size: 16px;
+    }
+    /* Title links to the project website (or arXiv); text-colored until hovered. */
+    .proj-title a {
+      color: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+    }
+    .proj-title a:hover,
+    .proj-title a:focus {
+      color: #f09228;
     }
     .proj-thumb {
       flex: 0 0 33%;
       max-width: 33%;
       padding-right: 2.5%;
       box-sizing: border-box;
-      transition: flex-basis 0.6s ease, max-width 0.6s ease, opacity 0.45s ease, padding 0.6s ease;
-      overflow: hidden;
+      position: relative;
     }
     .proj-body {
       flex: 1 1 0;
       min-width: 0;
     }
-    .proj-big {
-      flex: 0 0 100%;
-      max-width: 100%;
-      max-height: 0;
-      margin-top: 0;
-      opacity: 0;
-      overflow: hidden;
-      text-align: center;
-      transition: max-height 0.68s ease, opacity 0.68s ease, margin-top 0.68s ease;
+    .proj-thumb .img-wrap {
+      transform-origin: left center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    .proj-big img {
-      max-width: 100%;
-      height: auto;
-    }
-    /* When expanded (JS adds .expanded on entering the thumbnail): collapse the thumbnail,
-       let the body take full width, and reveal the enlarged image below. */
-    .proj.expanded .proj-thumb {
-      flex-basis: 0;
-      max-width: 0;
-      padding-right: 0;
-      opacity: 0;
-    }
-    .proj.expanded .proj-body {
-      flex: 1 1 100%;
-      max-width: 100%;
-    }
-    .proj.expanded .proj-big {
-      max-height: 1200px;
-      margin-top: 14px;
-      opacity: 1;
+    /* Short delay before zooming so the pointer passing over while scrolling does nothing. */
+    .proj-thumb:hover .img-wrap {
+      z-index: 20;
+      transform: scale(2.6);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.28);
+      transition-delay: 0.2s;
     }
     .proj-thumb .img-wrap {
       cursor: zoom-in;
@@ -270,6 +278,12 @@
       if (btn) { btn.textContent = expanded ? 'Collapse ▴' : 'Expand all ▾'; }
     }
 
+    // Abstracts: [...] expands the rest of the abstract inline, [less] collapses it.
+    function toggleAbstract(el) {
+      var abs = el.closest('.abstract');
+      if (abs) { abs.classList.toggle('open'); }
+    }
+
     // Fill in live GitHub star counts for any gh-stars link carrying a data-repo of owner/name.
     function loadGitHubStars() {
       document.querySelectorAll('.gh-stars').forEach(function (el) {
@@ -320,15 +334,13 @@
               </h1>
               <p> I am currently a PhD student in the <a href="https://www.cs.washington.edu/">Paul G. Allen School of Computer Science & Engineering</a> at the <a href="http://www.washington.edu/">University of Washington</a>. I am part of the <a href="https://robotlearning.cs.washington.edu/">Robot Learning Lab</a> where I am advised by <a href="https://homes.cs.washington.edu/~bboots/" >Byron Boots</a>. I am also an NSF Graduate Research Fellow.
               </p>
-              <!-- <p>
-              I work 
-              </p> -->
+              <p class="bio-note">
+                I am on the academic job market for 2027! Please reach out if you would like to share information regarding faculty and postdoc opportunities. 
+              </p>
               <p>
                 Prior to UW, I completed my B.S. in Aerospace Engineering and B.S. in Computer Science at the University of Maryland, College Park. During my undergrad, I worked with Glen Henshaw and Patrick Wensing while at the Naval Research Laboratory in Washington, D.C.
               </p>
-              <p class="bio-note">
-                Masters/Undergraduates interested in working with me, please sign up for a time to chat <a href="https://calendar.app.google/SkvNckDqA8j3KS1n7">here</a>. I am unlikely to respond to emails due to volume. If you would like to work on Wheeled Lab, please contact <a href="https://uwrobotlearning.github.io/WheeledLab/wlatuw.html">WL@UW</a> directly.
-              </p>
+                Masters/Undergraduates interested in working with me, please sign up for a time to chat <a href="https://calendar.app.google/SkvNckDqA8j3KS1n7">here</a>. If you would like to work on Wheeled Lab, please contact <a href="https://uwrobotlearning.github.io/WheeledLab/wlatuw.html">WL@UW</a> directly.
               {% comment %} CV "updated" date is read automatically from the pdfs/CV.pdf file's modified time. {% endcomment %}
               {% assign cv_file = site.static_files | where: "path", "/pdfs/CV.pdf" | first %}
               <p style="text-align:center">
@@ -401,17 +413,16 @@
             <td style="padding:2.5%;width:100%;vertical-align:middle">
               <p>
                 <!-- Based on my experience in field robotics, three pillars  -->
-                As we invite robots into places we live and work, my research aims to realize <b>natural robot learning</b> &mdash; real-time experiential improvement on hardware from signals accessible to or communicable by animals and humans.
-                I believe these methods will enable more sustainably scalable autonomy for many tasks, not only those which we can tele-operate, model, or simulate.
+                As we invite robots into places we live and work, my research aims to realize real-time robot learning in the deployment setting where human supervision is limited or absent.
                 <br><br>
                 
-                This position is largely motivated by my experience in developing off-road self-driving (now <a href="https://www.overland.ai/">Overland AI</a>), where I felt three long-standing pillars of engineering bottlenecked scalable, unstructured autonomy and deserves <span class="accent">new attention</span>:
+                This position is largely motivated by my experience in fielding robots (e.g. off-road autonomy, now <a href="https://www.overland.ai/">Overland AI</a>), where I felt three long-standing pillars of engineering bottlenecked scalable, unstructured autonomy and deserves <span class="accent">new attention</span>:
                 <ol class="agenda">
                   <li onclick="this.classList.toggle('pinned')"><strong><span class="accent">Natural</span> Task Specification.</strong> Rewards and objectives can be highly domain-specific or impossible, especially for end-users, to design then communicate.<div class="agenda-callout">Robots should be capable of inferring goals from observations of the world and their users.</div></li>
                   <br>
-                  <li onclick="this.classList.toggle('pinned')"><strong><span class="accent">Continual</span> Physical Understanding.</strong> The diversity of the natural world tends to render naive generalization of static, hand-designed or pre-trained features unreliable and dangerous.<div class="agenda-callout">Robots should be capable of reasoning, then learning, when it inevitably finds itself in an unfamiliar situation.</div></li>
+                  <li onclick="this.classList.toggle('pinned')"><strong><span class="accent">Continual</span> Physical Understanding.</strong> The diversity of the real world tends to render naive generalization of static, hand-designed or pre-trained features unreliable and dangerous.<div class="agenda-callout">Representations should serve reasoning, then learning, in anticipation of unfamiliar situations.</div></li>
                   <br>
-                  <li onclick="this.classList.toggle('pinned')"><strong><span class="accent">End-to-End</span> Abstractions</strong>. Many problems on deployment arose and recurred at the interfaces between sub-system modules (e.g. perception and control) where hand-designed abstractions were enforced or constrained.<div class="agenda-callout">Robots should learn (not <i>act</i>!) end-to-end as engineering distinctions and modules blur in challenging settings.</div></li>
+                  <li onclick="this.classList.toggle('pinned')"><strong><span class="accent">End-to-End</span> Abstractions</strong>. Many problems on deployment arose and recurred at the interfaces between sub-system modules (e.g. perception and control) where hand-designed abstractions were enforced.<div class="agenda-callout">Robots should learn (not <i>act</i>!) end-to-end as engineering distinctions and modules blur in challenging settings.</div></li>
                 </ol>
               </p>
             </td>
@@ -419,93 +430,30 @@
         </table>
 
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
-
-          {% for post in site.posts %}
-          {% for cat in post.categories %}
-          {% if cat == 'research' %}
-          {% comment %} Representative papers (listed in _data/representative.yml) get a yellow highlight. {% endcomment %}
-          {% if site.data.representative contains post.slug %}
-            {% assign row_bg = 'background-color:#fff8c4;' %}
-          {% else %}
-            {% assign row_bg = '' %}
-          {% endif %}
-          <tr style="{{ row_bg }}">
-            <td style="padding:2.5%;vertical-align:middle;{{ row_bg }}">
-            <div class="proj" onmouseleave="this.classList.remove('expanded')">
-              <div class="proj-thumb" onmouseenter="this.closest('.proj').classList.add('expanded')" title="Hover to enlarge">
-                <span class="img-wrap">
-                  <img src="{{post.image}}" alt="project image" style="width:auto; height:auto; max-width:100%;" />
-                  {% if post.stars %}<a class="gh-stars gh-tag" href="https://github.com/{{ post.stars }}" data-repo="{{ post.stars }}" title="GitHub stars">★ …</a>{% endif %}
-                </span>
-              </div>
-              <div class="proj-body abs-trigger">
-              <h3>{{post.title}}</h3>
-              <br>
-              {{post.authors}}
-
-              {% if post.venue %}
-              <br>
-              <em>{{post.venue}}</em>, {{ post.date | date: "%Y" }}
-              {% endif %}
-              <br>
-              {% if post.website %}
-              <a href="{{post.website}}">website</a> /
-              {% endif %}
-              {% if post.video %}
-              <a href="{{post.video}}">video</a> /
-              {% endif %}
-              {% if post.code %}
-              <a href="{{post.code}}">code</a> /
-              {% endif %}
-              {% if post.poster %}
-              <a href="{{post.poster}}">poster</a> /
-              {% endif %}
-              {% if post.slides %}
-              <a href="{{post.slides}}">slides</a> /
-              {% endif %}
-              {% if post.arxiv %}
-              <a href="{{post.arxiv}}">arXiv</a>
-              {% endif %}
-              {% assign printed_other = false %}
-              {% for i in (1..10) %}
-                {% if i == 1 %}
-                  {% assign other_key = 'other' %}
-                {% else %}
-                  {% assign other_key = 'other' | append: i %}
-                {% endif %}
-                {% assign other_item = post[other_key] %}
-                {% if other_item %}
-                {% if post.arxiv or printed_other %} / {% endif %}<a href="{{other_item.link}}">{{other_item.title}}</a>
-                {% assign printed_other = true %}
-                {% endif %}
-              {% endfor %}
-              {% if post.award %}
-              <!-- <br><span style="color:red;font-weight:bold;">{{ post.award | markdownify | remove: '<p>' | remove: '</p>' }}</span> -->
-              <br><span style="color:red;">{{ post.award | markdownify | remove: '<p>' | remove: '</p>' }}</span>
-              {% endif %}
-              {% assign cleaned_excerpt = post.excerpt | replace: '<p>', '' | replace: '</p>', '' %}
-              {% comment %} Show first sentence; rest expands on hover. Normalize newlines and protect e.g./i.e. so the sentence split holds. {% endcomment %}
-              {% assign norm = cleaned_excerpt | newline_to_br | replace: '<br />', ' ' | replace: 'e.g.', 'e!g!' | replace: 'i.e.', 'i!e!' %}
-              {% assign first_protected = norm | split: '. ' | first %}
-              {% assign rest_protected = norm | remove_first: first_protected | remove_first: '. ' %}
-              {% assign first_sentence = first_protected | replace: 'e!g!', 'e.g.' | replace: 'i!e!', 'i.e.' %}
-              {% assign rest = rest_protected | replace: 'e!g!', 'e.g.' | replace: 'i!e!', 'i.e.' %}
-              <p>
-                {% if rest != blank %}
-                <span class="abstract" tabindex="0">{{ first_sentence }}. <span class="abstract-toggle">[...]</span><span class="abstract-rest">{{ rest }}</span></span>
-                {% else %}
-                  {{ cleaned_excerpt }}
-                {% endif %}
-              </p>
-              </div><!-- /proj-body -->
-              <div class="proj-big">
-                <img src="{{post.image}}" alt="{{post.title}} preview" />
-              </div>
-            </div><!-- /proj -->
+          <tr>
+            <td style="padding:2.5% 2.5% 0 2.5%;width:100%;vertical-align:middle">
+              <h2>Selected Publications</h2>
             </td>
           </tr>
+          {% comment %} Papers listed in _data/representative.yml. {% endcomment %}
+          {% for post in site.posts %}
+          {% if post.categories contains 'research' and site.data.representative contains post.slug %}
+          {% include pub-row.html post=post %}
           {% endif %}
           {% endfor %}
+        </table>
+
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+          <tr>
+            <td style="padding:2.5% 2.5% 0 2.5%;width:100%;vertical-align:middle">
+              <h2>Other Publications</h2>
+            </td>
+          </tr>
+          {% comment %} Remaining research posts (those not listed in _data/representative.yml). {% endcomment %}
+          {% for post in site.posts %}
+          {% if post.categories contains 'research' %}{% unless site.data.representative contains post.slug %}
+          {% include pub-row.html post=post inline_title=true %}
+          {% endunless %}{% endif %}
           {% endfor %}
         </table>
         </div><!-- /panel-research -->
@@ -629,7 +577,7 @@
             <td style="padding:2.5%;width:33%;vertical-align:middle;min-width:120px">
               <img src="{{post.image}}" alt="project image" style="width:auto; height:auto; max-width:100%;" />
             </td>
-            <td class="abs-trigger" style="padding:2.5%;width:100%;vertical-align:middle">
+            <td style="padding:2.5%;width:100%;vertical-align:middle">
               <h3>{{post.title}}</h3>
               <br>
               <!-- <em>{{post.categories}} {{post.course}}</em> -->
@@ -691,7 +639,7 @@
               {% endif %}
               <p></p>
               {% assign cleaned_excerpt = post.excerpt | replace: '<p>', '' | replace: '</p>', '' %}
-              {% comment %} Show first sentence; rest expands on hover. Normalize newlines and protect e.g./i.e. so the sentence split holds. {% endcomment %}
+              {% comment %} Show first sentence; rest expands on clicking [...]. Normalize newlines and protect e.g./i.e. so the sentence split holds. {% endcomment %}
               {% assign norm = cleaned_excerpt | newline_to_br | replace: '<br />', ' ' | replace: 'e.g.', 'e!g!' | replace: 'i.e.', 'i!e!' %}
               {% assign first_protected = norm | split: '. ' | first %}
               {% assign rest_protected = norm | remove_first: first_protected | remove_first: '. ' %}
@@ -699,7 +647,7 @@
               {% assign rest = rest_protected | replace: 'e!g!', 'e.g.' | replace: 'i!e!', 'i.e.' %}
               <p>
                 {% if rest != blank %}
-                <span class="abstract" tabindex="0">{{ first_sentence }}. <span class="abstract-toggle">[...]</span><span class="abstract-rest">{{ rest }}</span></span>
+                <span class="abstract">{{ first_sentence }}. <span class="abstract-toggle" role="button" tabindex="0" onclick="toggleAbstract(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAbstract(this);}" >[...]</span><span class="abstract-rest">{{ rest }} <span class="abstract-less" role="button" tabindex="0" onclick="toggleAbstract(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleAbstract(this);}" >[less]</span></span></span>
                 {% else %}
                   {{ cleaned_excerpt }}
                 {% endif %}

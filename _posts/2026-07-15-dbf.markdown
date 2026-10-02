@@ -1,0 +1,13 @@
+---
+layout: post
+title:  "Discriminative Barrier Functions for Safe Adversarial Imitation Learning from Observation"
+date:   2026-07-15 22:21:59 +00:00
+end_date:   Present
+image: /images/dbf-fig1.png
+categories: research
+author: "Tyler Han"
+authors: "Anubhav Vishwakarma, Bhaumik Mehta, Caleb Hsu, Byron Boots, Karen Leung<sup>&dagger;</sup>, <strong>Tyler Han</strong><sup>&dagger;</sup><br><small><sup>&dagger;</sup>Equal advising</small>"
+venue: arXiv preprint
+arxiv: https://arxiv.org/abs/2607.13938
+---
+Inverse Reinforcement Learning (IRL) algorithms are powerful tools for learning from and generalizing expert demonstrations, but they often rely on unconstrained exploration, rendering them unsafe for real-world deployment. Meanwhile, Control Barrier Functions (CBFs) can guarantee the safety of control systems, but the analytical design of CBFs can be time-consuming and esoteric. In this work, we address these limitations jointly by constraining reward function candidacy during IRL to the space of CBFs, yielding a formulation that exhibits empirically safe online control with continuous experiential improvement. Crucially, this framework enables the data-driven recovery of barrier functions directly from unlabeled expert observations. We demonstrate that the recovered barrier function is robust to unsafe states entirely absent from the expert data. Furthermore, we benchmark our method against standard IRL baselines in a simulated navigation environment, demonstrating improved safety performance. Finally, we investigate the trade-offs of planning-based versus policy-based IRL methods across both simulation and a real world obstacle avoidance task.
