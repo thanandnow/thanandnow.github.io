@@ -5,6 +5,7 @@ date:   2026-02-17 22:21:59 +00:00
 end_date:   Present
 image: /images/mpail2-vis.gif
 # image: /images/mpail2-teaser.gif
+image_tag: from scratch
 categories: research
 author: "Tyler Han"
 authors: "<strong>Tyler Han</strong>,  Bat Nemekhbold, Siyang Shen, Rohan Baijal, Richard Ebock, Harine Ravichandran, Sanghun Jung, Kevin Huang, Byron Boots"

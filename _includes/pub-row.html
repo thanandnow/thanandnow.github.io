@@ -15,6 +15,7 @@
                 <span class="img-wrap">
                   <img src="{{post.image}}" alt="project image" style="width:auto; height:auto; max-width:100%;" />
                   {% if post.stars %}<a class="gh-stars gh-tag" href="https://github.com/{{ post.stars }}" data-repo="{{ post.stars }}" title="GitHub stars">★ …</a>{% endif %}
+                  {% if post.image_tag %}<span class="img-tag">{{ post.image_tag }}</span>{% endif %}
                 </span>
               </div>
               <div class="proj-body">

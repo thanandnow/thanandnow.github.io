@@ -68,7 +68,7 @@
       line-height: 0;
       max-width: 100%;
     }
-    a.gh-tag {
+    a.gh-tag, .img-tag {
       position: absolute;
       bottom: 6px;
       right: 6px;
@@ -84,6 +84,12 @@
     }
     a.gh-tag:hover {
       background: #f09228;
+    }
+    .img-tag {
+      background: none;
+      /* color: inherit; */
+      font-weight: normal;
+      font-style: italic;
     }
     /* Mentored-students photo grid */
     .student-grid {
@@ -306,6 +312,10 @@
       });
     }
     document.addEventListener('DOMContentLoaded', loadGitHubStars);
+    document.addEventListener('DOMContentLoaded', function () {
+      var name = location.hash.slice(1);
+      if (name && document.getElementById('panel-' + name)) { showTab(name); }
+    });
 
     function showTab(name) {
       document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('active'); });
@@ -335,7 +345,7 @@
               <p> I am currently a PhD student in the <a href="https://www.cs.washington.edu/">Paul G. Allen School of Computer Science & Engineering</a> at the <a href="http://www.washington.edu/">University of Washington</a>. I am part of the <a href="https://robotlearning.cs.washington.edu/">Robot Learning Lab</a> where I am advised by <a href="https://homes.cs.washington.edu/~bboots/" >Byron Boots</a>. I am also an NSF Graduate Research Fellow.
               </p>
               <p class="bio-note">
-                I am on the academic job market for 2027! Please reach out if you would like to share information regarding faculty and postdoc opportunities. 
+                I am on the academic job market for 2027! Please reach out if you can share information about faculty and postdoc opportunities. 
               </p>
               <p>
                 Prior to UW, I completed my B.S. in Aerospace Engineering and B.S. in Computer Science at the University of Maryland, College Park. During my undergrad, I worked with Glen Henshaw and Patrick Wensing while at the Naval Research Laboratory in Washington, D.C.
@@ -394,12 +404,13 @@
           </tr>
         </table>
 
-        <!-- Tabs: Research / Mentoring -->
+        <!-- Tabs: Research / Publications / Education / Mentoring -->
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
           <tr>
             <td style="padding:2.5% 2.5% 0 2.5%;width:100%;vertical-align:middle">
               <div class="tab-bar">
                 <button class="tab-btn active" id="tab-research" onclick="showTab('research')">Research</button>
+                <button class="tab-btn" id="tab-publications" onclick="showTab('publications')">Publications</button>
                 <button class="tab-btn" id="tab-education" onclick="showTab('education')">Education</button>
                 <button class="tab-btn" id="tab-mentoring" onclick="showTab('mentoring')">Mentoring</button>
               </div>
@@ -411,11 +422,11 @@
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
           <tr>
             <td style="padding:2.5%;width:100%;vertical-align:middle">
+              {% include story.html %}
               <p>
-                <!-- Based on my experience in field robotics, three pillars  -->
                 As we invite robots into places we live and work, my research aims to realize real-time robot learning in the deployment setting where human supervision is limited or absent.
                 <br><br>
-                
+
                 This position is largely motivated by my experience in fielding robots (e.g. off-road autonomy, now <a href="https://www.overland.ai/">Overland AI</a>), where I felt three long-standing pillars of engineering bottlenecked scalable, unstructured autonomy and deserves <span class="accent">new attention</span>:
                 <ol class="agenda">
                   <li onclick="this.classList.toggle('pinned')"><strong><span class="accent">Natural</span> Task Specification.</strong> Rewards and objectives can be highly domain-specific or impossible, especially for end-users, to design then communicate.<div class="agenda-callout">Robots should be capable of inferring goals from observations of the world and their users.</div></li>
@@ -428,7 +439,10 @@
             </td>
           </tr>
         </table>
+        </div><!-- /panel-research -->
 
+        <!-- Publications tab: selected papers are listed in _data/representative.yml -->
+        <div class="tab-panel" id="panel-publications">
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
           <tr>
             <td style="padding:2.5% 2.5% 0 2.5%;width:100%;vertical-align:middle">
@@ -446,7 +460,7 @@
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
           <tr>
             <td style="padding:2.5% 2.5% 0 2.5%;width:100%;vertical-align:middle">
-              <h2>Other Publications</h2>
+              <h2>Other Publications & Preprints</h2>
             </td>
           </tr>
           {% comment %} Remaining research posts (those not listed in _data/representative.yml). {% endcomment %}
@@ -456,7 +470,7 @@
           {% endunless %}{% endif %}
           {% endfor %}
         </table>
-        </div><!-- /panel-research -->
+        </div><!-- /panel-publications -->
 
         <!-- Mentoring tab content. Mentoring projects are defined in _data/mentoring.yml -->
         <div class="tab-panel" id="panel-mentoring">
