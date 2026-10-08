@@ -48,6 +48,10 @@
       border-radius: 4px;
       padding: 0 8px;
     }
+    /* Light alternating rows so news items are easy to tell apart. */
+    .news-scroll tr:nth-child(even) td {
+      background: #f7f7f5;
+    }
     .news-scroll.expanded {
       max-height: none;
       overflow-y: visible;
@@ -404,13 +408,22 @@
           </tr>
         </table>
 
+        <!-- Research story: the timeline from _data/story.yml, between News and the tabs. -->
+        <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
+          <tr>
+            <td style="padding:2.5%;width:100%;vertical-align:middle">
+              {% include story.html %}
+            </td>
+          </tr>
+        </table>
+
         <!-- Tabs: Research / Publications / Education / Mentoring -->
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
           <tr>
             <td style="padding:2.5% 2.5% 0 2.5%;width:100%;vertical-align:middle">
               <div class="tab-bar">
-                <button class="tab-btn active" id="tab-research" onclick="showTab('research')">Research</button>
-                <button class="tab-btn" id="tab-publications" onclick="showTab('publications')">Publications</button>
+                <button class="tab-btn" id="tab-research" onclick="showTab('research')">Research</button>
+                <button class="tab-btn active" id="tab-publications" onclick="showTab('publications')">Publications</button>
                 <button class="tab-btn" id="tab-education" onclick="showTab('education')">Education</button>
                 <button class="tab-btn" id="tab-mentoring" onclick="showTab('mentoring')">Mentoring</button>
               </div>
@@ -418,11 +431,10 @@
           </tr>
         </table>
 
-        <div class="tab-panel active" id="panel-research">
+        <div class="tab-panel" id="panel-research">
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
           <tr>
             <td style="padding:2.5%;width:100%;vertical-align:middle">
-              {% include story.html %}
               <p>
                 As we invite robots into places we live and work, my research aims to realize real-time robot learning in the deployment setting where human supervision is limited or absent.
                 <br><br>
@@ -442,7 +454,7 @@
         </div><!-- /panel-research -->
 
         <!-- Publications tab: selected papers are listed in _data/representative.yml -->
-        <div class="tab-panel" id="panel-publications">
+        <div class="tab-panel active" id="panel-publications">
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
           <tr>
             <td style="padding:2.5% 2.5% 0 2.5%;width:100%;vertical-align:middle">

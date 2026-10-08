@@ -61,14 +61,14 @@
     height: 3px;
     background: var(--ink);
     border-radius: 2px;
-    transition: left 0.8s cubic-bezier(0.3, 0.7, 0.2, 1), width 1s cubic-bezier(0.3, 0.7, 0.2, 1) 0.25s;
+    transition: left calc(0.8s * var(--k, 1)) cubic-bezier(0.3, 0.7, 0.2, 1), width calc(1s * var(--k, 1)) cubic-bezier(0.3, 0.7, 0.2, 1) calc(0.25s * var(--k, 1));
   }
   .tl-head {
     position: absolute;
     width: 14px;
     height: 20px;
     margin-top: -9px;
-    transition: left 1s cubic-bezier(0.3, 0.7, 0.2, 1) 0.25s, opacity 0.3s ease;
+    transition: left calc(1s * var(--k, 1)) cubic-bezier(0.3, 0.7, 0.2, 1) calc(0.25s * var(--k, 1)), opacity calc(0.3s * var(--k, 1)) ease;
   }
   .tl-head svg {
     display: block;
@@ -77,7 +77,7 @@
   .tl-tick {
     position: absolute;
     width: 0;
-    transition: left 0.8s cubic-bezier(0.3, 0.7, 0.2, 1), opacity 0.4s ease 0.6s;
+    transition: left calc(0.8s * var(--k, 1)) cubic-bezier(0.3, 0.7, 0.2, 1), opacity calc(0.4s * var(--k, 1)) ease calc(0.6s * var(--k, 1));
   }
   .tl-tick::before {
     content: '';
@@ -102,9 +102,9 @@
   /* Boxes: big while their beat is open, a small pile afterwards, hidden before. */
   .tl-item {
     position: absolute;
-    transition: left 0.85s cubic-bezier(0.3, 0.7, 0.2, 1), top 0.85s cubic-bezier(0.3, 0.7, 0.2, 1),
-                width 0.85s cubic-bezier(0.3, 0.7, 0.2, 1), height 0.85s cubic-bezier(0.3, 0.7, 0.2, 1),
-                transform 0.85s cubic-bezier(0.3, 0.7, 0.2, 1), opacity 0.5s ease;
+    transition: left calc(0.85s * var(--k, 1)) cubic-bezier(0.3, 0.7, 0.2, 1), top calc(0.85s * var(--k, 1)) cubic-bezier(0.3, 0.7, 0.2, 1),
+                width calc(0.85s * var(--k, 1)) cubic-bezier(0.3, 0.7, 0.2, 1), height calc(0.85s * var(--k, 1)) cubic-bezier(0.3, 0.7, 0.2, 1),
+                transform calc(0.85s * var(--k, 1)) cubic-bezier(0.3, 0.7, 0.2, 1), opacity calc(0.5s * var(--k, 1)) ease;
   }
   /* An item's photos, all shown at once as overlapping cards; hovering one lifts it. */
   .tl-item:hover {
@@ -112,9 +112,9 @@
   }
   .tl-card {
     position: absolute;
-    transition: left 0.85s cubic-bezier(0.3, 0.7, 0.2, 1), top 0.85s cubic-bezier(0.3, 0.7, 0.2, 1),
-                width 0.85s cubic-bezier(0.3, 0.7, 0.2, 1), height 0.85s cubic-bezier(0.3, 0.7, 0.2, 1),
-                transform 0.25s ease;
+    transition: left calc(0.85s * var(--k, 1)) cubic-bezier(0.3, 0.7, 0.2, 1), top calc(0.85s * var(--k, 1)) cubic-bezier(0.3, 0.7, 0.2, 1),
+                width calc(0.85s * var(--k, 1)) cubic-bezier(0.3, 0.7, 0.2, 1), height calc(0.85s * var(--k, 1)) cubic-bezier(0.3, 0.7, 0.2, 1),
+                transform calc(0.25s * var(--k, 1)) ease;
   }
   .tl-card:hover {
     z-index: 5;
@@ -133,7 +133,7 @@
   /* 3D only on cards that can turn over: it costs a graphics layer per face. */
   .tl-card.flippable .tl-flip {
     transform-style: preserve-3d;
-    transition: transform 0.6s cubic-bezier(0.3, 0.7, 0.2, 1);
+    transition: transform calc(0.6s * var(--k, 1)) cubic-bezier(0.3, 0.7, 0.2, 1);
   }
   .tl-card.flipped .tl-flip {
     transform: rotateY(180deg);
@@ -190,7 +190,7 @@
     color: var(--ink);
     transform: rotate(-4deg);
     transform-origin: left bottom;
-    transition: opacity 0.4s ease;
+    transition: opacity calc(0.4s * var(--k, 1)) ease;
   }
   .tl-label::after {
     content: '';
@@ -228,7 +228,7 @@
   }
   .tl-text p.on {
     display: block;
-    animation: tl-in 0.6s ease 1s both;
+    animation: tl-in calc(0.6s * var(--k, 1)) ease both;
   }
   /* <u>...</u> in narration: a hand-drawn underline in the red pen, swept in after the
      narration appears; several in one beat draw one after another. */
@@ -241,11 +241,11 @@
     background-size: 0% 0.32em;
   }
   .tl-text p.on u {
-    animation: tl-underline 0.6s cubic-bezier(0.5, 0, 0.3, 1) 1.7s forwards;
+    animation: tl-underline calc(0.6s * var(--k, 1)) cubic-bezier(0.5, 0, 0.3, 1) calc(0.5s * var(--k, 1)) forwards;
   }
-  .tl-text p.on u:nth-of-type(2) { animation-delay: 2.2s; }
-  .tl-text p.on u:nth-of-type(3) { animation-delay: 2.7s; }
-  .tl-text p.on u:nth-of-type(n+4) { animation-delay: 3.2s; }
+  .tl-text p.on u:nth-of-type(2) { animation-delay: calc(1s * var(--k, 1)); }
+  .tl-text p.on u:nth-of-type(3) { animation-delay: calc(1.5s * var(--k, 1)); }
+  .tl-text p.on u:nth-of-type(n+4) { animation-delay: calc(2s * var(--k, 1)); }
   @keyframes tl-underline {
     to { background-size: 100% 0.32em; }
   }
@@ -304,7 +304,7 @@
     background: none;
     padding: 0;
     cursor: pointer;
-    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    transition: background calc(0.2s * var(--k, 1)) ease, border-color calc(0.2s * var(--k, 1)) ease, transform calc(0.2s * var(--k, 1)) ease;
   }
   .tl-dot:hover {
     transform: scale(1.25);
@@ -313,6 +313,59 @@
     background: #f09228;
     border-color: #f09228;
     transform: scale(1.3);
+  }
+  /* Speed control: handwritten, in the notebook's top-right corner; the current pick is
+     circled in the red pen. */
+  .tl-speed {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    z-index: 2;
+    font-family: 'Patrick Hand', 'Lato', cursive;
+    font-size: 1.05em;
+    color: #8a8a8a;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+  .tl-speed span {
+    margin-right: 4px;
+  }
+  .tl-speed button {
+    font: inherit;
+    color: var(--ink);
+    background: none;
+    border: 1.5px solid transparent;
+    border-radius: 50% 45% 55% 48%;
+    padding: 0 6px;
+    line-height: 1.3;
+    cursor: pointer;
+  }
+  .tl-speed button:hover {
+    color: #c4462c;
+  }
+  /* Icon buttons, drawn as pen strokes. */
+  .tl-speed .tl-icon {
+    padding: 0 4px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .tl-speed .tl-icon svg {
+    width: 1.25em;
+    height: 1.25em;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .tl-speed .tl-skip {
+    margin-left: 4px;
+  }
+  .tl-speed button.on {
+    border-color: #c4462c;
+    color: #c4462c;
+    transform: rotate(-4deg);
   }
   .tl-diary-title {
     font-family: 'Patrick Hand', 'Lato', cursive;
@@ -323,7 +376,7 @@
   /* Words struck out of the title use the same pen as struck stances. */
   .tl-title-word {
     position: relative;
-    transition: color 0.4s ease;
+    transition: color calc(0.4s * var(--k, 1)) ease;
   }
   .tl-title-word::after {
     content: '';
@@ -336,7 +389,7 @@
     border-radius: 1px;
     transform: scaleX(0) rotate(-1.5deg);
     transform-origin: left center;
-    transition: transform 0.45s cubic-bezier(0.5, 0, 0.3, 1);
+    transition: transform calc(0.45s * var(--k, 1)) cubic-bezier(0.5, 0, 0.3, 1);
   }
   .tl-title-word.crossed {
     color: #9a9a9a;
@@ -374,7 +427,7 @@
   }
   .tl-s-text {
     position: relative;
-    transition: color 0.4s ease;
+    transition: color calc(0.4s * var(--k, 1)) ease;
   }
   /* A crossed-out stance: every piece of it gets its own strike (drawn left to right in
      turn, see --sweep), except words that were kept, which simply have none. */
@@ -383,7 +436,7 @@
   }
   .tl-stances li.crossed .tl-seg:not(.revived)::after {
     transform: scaleX(1) rotate(-0.8deg);
-    transition-delay: var(--sweep, 0s);
+    transition-delay: var(--sweep, calc(0s * var(--k, 1)));
   }
   .tl-seg.blank::after {
     display: none;  /* a bare space between kept words gets no strike */
@@ -392,7 +445,7 @@
      them is written beside, in the same red as notes. */
   .tl-seg {
     position: relative;
-    transition: color 0.4s ease;
+    transition: color calc(0.4s * var(--k, 1)) ease;
   }
   .tl-seg.hide {
     display: none;
@@ -417,7 +470,7 @@
     border-radius: 1px;
     transform: scaleX(0) rotate(-1.5deg);
     transform-origin: left center;
-    transition: transform 0.4s cubic-bezier(0.5, 0, 0.3, 1);
+    transition: transform calc(0.4s * var(--k, 1)) cubic-bezier(0.5, 0, 0.3, 1);
   }
   .tl-seg.cut::after {
     transform: scaleX(1) rotate(-1.5deg);
@@ -433,7 +486,7 @@
   .tl-seg.revived {
     z-index: 1;
     color: var(--ink);
-    transition: color 0.4s ease;
+    transition: color calc(0.4s * var(--k, 1)) ease;
   }
 
   .tl-stances.instant .tl-seg,
@@ -455,11 +508,6 @@
      Words go back to plain text once written. */
   .tl-word {
     display: inline-block;
-    clip-path: inset(-0.3em 100% -0.3em -0.2em);
-  }
-  .tl-word.inked {
-    clip-path: inset(-0.3em -0.2em -0.3em -0.2em);
-    transition: clip-path var(--t) cubic-bezier(0.4, 0.1, 0.6, 0.9) var(--d);
   }
   .tl.draft .tl-stances:empty {
     min-height: 3em;
@@ -482,6 +530,9 @@
 </style>
 
 <div class="tl" id="tl" tabindex="0" aria-roledescription="timeline" aria-label="Research story">
+  <div class="tl-speed" role="group" aria-label="Animation speed">
+    <span>speed</span>{% if site.data.story.speeds %}{% assign speeds = site.data.story.speeds %}{% else %}{% assign speeds = "1,2" | split: "," %}{% endif %}{% for v in speeds %}<button type="button" data-speed="{{ v }}">{{ v }}&times;</button>{% endfor %}<button type="button" class="tl-icon" data-speed="off" title="Instant (animations off)" aria-label="Instant: animations off"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M11.5 2 L4.5 11 L9.5 11 L8 18 L15.5 8.5 L10.5 8.5 Z"/></svg></button><button type="button" class="tl-icon tl-skip" title="Skip to the end" aria-label="Skip to the end"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 4.5 L11.5 10 L4 15.5 Z M15.5 4.5 L15.5 15.5"/></svg></button>
+  </div>
   <div class="tl-diary-title">{{ site.data.story.title }}</div>
   <ol class="tl-stances" aria-live="polite"></ol>
   <div class="tl-stage">
@@ -521,6 +572,34 @@
     var prev = root.querySelector('[data-go="-1"]');
     var next = root.querySelector('[data-go="1"]');
     var list = root.querySelector('.tl-stances');
+
+    // Animation speed: k scales every duration (k = 1 / speed). The viewer's pick is kept in
+    // this browser; the default comes from `speed` in _data/story.yml.
+    var k = 1;
+    var speedBtns = root.querySelectorAll('.tl-speed [data-speed]');
+    function setSpeed(v) {
+      v = v === 'off' ? 'off' : (+v > 0 ? +v : 1);
+      k = v === 'off' ? 0 : 1 / v;
+      root.style.setProperty('--k', k);
+      speedBtns.forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-speed') === String(v)); });
+      try { localStorage.setItem('tl-speed', String(v)); } catch (e) {}
+    }
+    var saved = null;
+    try { saved = localStorage.getItem('tl-speed'); } catch (e) {}
+    var offered = [].map.call(speedBtns, function (b) { return b.getAttribute('data-speed'); });
+    setSpeed(offered.indexOf(saved) >= 0 ? saved : (DATA.speed || 1));  // ignore picks no longer offered
+    speedBtns.forEach(function (b) {
+      b.addEventListener('click', function (e) { e.stopPropagation(); setSpeed(b.getAttribute('data-speed')); });
+    });
+    // Skip to the end: the last beat, fully drawn, without playing anything.
+    root.querySelector('.tl-skip').addEventListener('click', function (e) {
+      e.stopPropagation();
+      go(beats.length - 1, true);
+    });
+
+    function showNarration(i) {
+      texts.forEach(function (p, n) { p.classList.toggle('on', n === i); });
+    }
     var title = root.querySelector('.tl-diary-title');
 
     // Words a beat strikes out of the title: wrap each in a span that can be crossed.
@@ -666,25 +745,42 @@
 
     // Write `text` into `span` word by word, like a pen: a word takes longer the more letters
     // it has, with a short lift between words. Returns how long the writing takes (ms).
+    var calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Each word is unclipped left to right, frame by frame, from script: the same in every
+    // browser, and cheap, since only a handful of words move at once.
+    function clipTo(word, p) {
+      word.style.clipPath = p >= 1 ? '' : 'inset(-0.3em ' + ((1 - p) * 100).toFixed(1) + '% -0.3em -0.2em)';
+    }
     function ink(span, text) {
       var t = 0;
       span.textContent = '';
-      var words = text.split(' ').map(function (w, k) {
-        if (k) { span.appendChild(document.createTextNode(' ')); }
+      var words = text.split(' ').map(function (w, n) {
+        if (n) { span.appendChild(document.createTextNode(' ')); }
         var word = document.createElement('span');
         word.className = 'tl-word';
         word.textContent = w;
-        var dur = 70 + w.length * 55;
-        word.style.setProperty('--t', dur + 'ms');
-        word.style.setProperty('--d', t + 'ms');
-        t += dur + 70 + Math.random() * 60;
+        var dur = 40 + w.length * 30;
+        var plan = { el: word, start: t * k, dur: dur * k };
+        if (!calm && k) { clipTo(word, 0); }
         span.appendChild(word);
-        return word;
+        t += dur + 35 + Math.random() * 35;
+        return plan;
       });
-      void span.offsetWidth;
-      words.forEach(function (w) { w.classList.add('inked'); });
-      setTimeout(function () { if (span.firstChild === words[0]) { span.textContent = text; } }, t + 400);
-      return t;
+      if (!calm && k) {
+        var t0 = performance.now();
+        (function frame(now) {
+          var busy = false;
+          words.forEach(function (w) {
+            var p = Math.min(1, Math.max(0, (now - t0 - w.start) / w.dur));
+            var e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;  // ease in and out
+            clipTo(w.el, e);
+            if (p < 1) { busy = true; }
+          });
+          if (busy && span.contains(words[0].el)) { requestAnimationFrame(frame); }
+        })(t0);
+      }
+      setTimeout(function () { if (span.firstChild === words[0].el) { span.textContent = text; } }, (t + 400) * k);
+      return calm || !k ? 0 : t;
     }
 
     var run = 0;  // bumped on every beat change, so a stale animation stops
@@ -751,7 +847,7 @@
           steps.push(function () {
             var w = st.span.offsetWidth || 1;
             st.segs.forEach(function (sg) {
-              if (sg.el) { sg.el.style.setProperty('--sweep', (sg.el.offsetLeft - st.span.offsetLeft) / w * 0.35 + 's'); }
+              if (sg.el) { sg.el.style.setProperty('--sweep', (sg.el.offsetLeft - st.span.offsetLeft) / w * 0.35 * k + 's'); }
             });
             st.li.classList.add('crossed');
             return 800;
@@ -762,11 +858,14 @@
           steps.push(function () { st.li.classList.remove('crossed'); st.li.classList.add('revived'); return 550; });
         }
       });
+      // Steps report their length at speed 1; the wait scales with the chosen speed. The
+      // beliefs start with the line's new reach, and the narration follows once they finish.
       function next(n) {
-        if (n >= steps.length || token !== run) { return; }
-        setTimeout(function () { next(n + 1); }, steps[n]());
+        if (token !== run) { return; }
+        if (n >= steps.length) { showNarration(to); return; }
+        setTimeout(function () { next(n + 1); }, steps[n]() * k);
       }
-      setTimeout(function () { next(0); }, 600);
+      setTimeout(function () { next(0); }, 250 * k);
     }
 
     // One element per item, across all beats, so each can travel from big box to pile.
@@ -934,7 +1033,7 @@
       open.forEach(function (it, i) {
         arrange(it, false);
         place(it.el, it.x, lineY - 30 - it.h, it.w, it.h, {
-          opacity: 1, transform: 'none', transitionDelay: (0.75 + i * 0.18) + 's', zIndex: 3 + i
+          opacity: 1, transform: 'none', transitionDelay: (0.75 + i * 0.18) * k + 's', zIndex: 3 + i
         });
         it.el.classList.remove('past');
       });
@@ -1057,12 +1156,14 @@
       });
     }
 
-    function go(i) {
-      if (i < 0 || i >= beats.length || i === cur) { return; }
-      showStances(cur, i);
+    function go(i, instant) {
+      if (i < 0 || i >= beats.length || (i === cur && !instant)) { return; }
+      var stepping = !instant && i === cur + 1;
+      showStances(instant ? -2 : cur, i);
       cur = i;
       root.querySelectorAll('.tl-card.flipped').forEach(function (c) { c.classList.remove('flipped'); });
-      texts.forEach(function (p, k) { p.classList.toggle('on', k === cur); });
+      // Stepping forward, the narration waits for the beliefs; a jump shows it right away.
+      showNarration(stepping ? -1 : cur);
       dots.forEach(function (d, k) { d.classList.toggle('on', k === cur); });
       prev.disabled = cur <= 0;
       next.disabled = cur >= beats.length - 1;

@@ -48,9 +48,14 @@
 #   title_crossouts (per beat): words of the title struck out at that beat, e.g. ["Unshakeable"]
 # =============================================================================
 
+# Animation speed: `speed` is the default (a number, or "off"); viewers can pick any of
+# `speeds` in the corner, turn animations off, or skip to the end.
+speed: 1
+speeds: [1, 2]
+
 title: "My Beliefs"
 
-ticks: [2022, 2024]
+ticks: [2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026]
 
 beats:
   - reach: 2021.9
@@ -59,12 +64,12 @@ beats:
     stances: [Important problems lie out in the field]
     crossouts: []
     items:
-      - label: Ranger
+      - label: Space Robotics
         date: 2019.5
         images:
           - src: /images/story/ranger-duck.jpg
           - src: /images/story/ranger-asteroid.jpg
-      - label: Tunnel Boring
+      - label: Autonomous Tunneling
         date: 2021.6
         images:
           - src: /images/story/notaboring.jpg
@@ -78,11 +83,11 @@ beats:
       - label: NRL
         date: 2022.0
         images:
-          - src: /images/space-illust.png
+          - src: /images/story/nrl-koopman.png
             fit: contain
 
   - reach: 2023.6
-    text: "Starting my PhD, I immediately got hands-on with a <u>decked</u> off-road robot with data-driven vision."
+    text: "Starting my PhD, I immediately got hands-on with a <u>decked out</u> off-road robot with data-driven vision."
     stances: ["Perception, planning, and control can take you really far"]
     crossouts: []
     items:
@@ -99,8 +104,8 @@ beats:
             pos: right bottom
 
   - reach: 2024.6
-    text: "Of course, all the standard control and systems engineering issues persisted, now with a bit of ML-flavoring."
-    stances: ["Robots should learn: from humans and end-to-end"]
+    text: "All the standard control and systems engineering issues persisted, now with a bit of ML-flavoring. <u>The world is too big to be surprised by failure.</u>"
+    stances: ["Robots should continually learn: from humans and end-to-end"]
     crossouts: []
     items:
       # Keep the bottom-right corner: it carries the public-release statement.
@@ -129,11 +134,17 @@ beats:
           - src: /images/story/wl-lab-clip.mp4
           - src: /images/story/wl-drift.mp4
             fit: contain
+      - label: WL@UW
+        date: 2025.4
+        aspect: 1.5
+        images:
+          - src: /images/story/wheeled-lab-education.jpg
+            caption: '<span>An open <a href="https://uwrobotlearning.github.io/WheeledLab/overview.html">course</a>, the <a href="https://uwrobotlearning.github.io/WheeledLab/wlatuw.html">WL@UW</a> student program, and <a href="https://www.youtube.com/watch?v=caVh-2v4xz4">videos</a></span>'
 
     # stances: ["Roboticists are merely moving their problems around; If a problem has to exist, where should it be?"]
 
   - reach: 2026.1
-    text: "Over a year of trying to reconcile control with learning, I pushed on planning-based Inverse RL as a means to achieve observational learning for robots. Simulation stood in the way."
+    text: "Over a year of trying to reconcile control with learning, I pushed on planning-based Inverse RL as a means to learn and execute intent. Simulation stood in the way."
     stances: []
     edits: [
       {stance: 4, after: ":", write: "intent"},
@@ -150,18 +161,17 @@ beats:
       - label: MPAIL
         date: 2025.6
         images:
-          - src: /images/story/mpail-real.mp4
-            fit: contain
           - src: /images/story/mpail-fig1.jpg
+            fit: contain
+          - src: /images/story/mpail-real.mp4
             fit: contain
 
   - reach: 2026.7
-    text: "Finally, I'm seeing a way for a robot to adapt during deployment without extensive engineering. Can I scale this up?"
+    text: "Finally, I'm seeing a way for robots to adapt during deployment without extensive engineering. Can I scale this up?"
     stances: []
     crossouts: []
     edits: [
       {stance: 1, word: "the field", write: "deployment"},
-      {stance: 4, after: "should", write: "continually"},
       {stance: 4, word: "from", write: "by observing"},
     ]
     items:
