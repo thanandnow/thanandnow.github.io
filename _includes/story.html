@@ -51,7 +51,7 @@
   .tl-stage {
     position: relative;
     contain: layout paint;  /* keeps the moving cards from re-laying out the rest of the page */
-    height: 300px;
+    height: 320px;
     cursor: pointer;
     overflow: hidden;
   }
@@ -475,14 +475,8 @@
   .tl-seg.cut::after {
     transform: scaleX(1) rotate(-1.5deg);
   }
-  /* Revived: back in black ink with a dotted underline, like a proofreader's "stet". A word
-     revived inside a crossed-out stance sits above that stance's strike, covering it. */
-  .tl-seg.revived,
-  .tl-stances li.revived .tl-s-text {
-    text-decoration: underline dotted #c4462c;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 4px;
-  }
+  /* Revived: back in black ink, unstruck (inside a crossed-out stance, its piece simply has
+     no strike). */
   .tl-seg.revived {
     z-index: 1;
     color: var(--ink);
@@ -521,7 +515,7 @@
     padding: 0 6px;
   }
   @media (max-width: 640px) {
-    .tl-stage { height: 250px; }
+    .tl-stage { height: 265px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .tl *, .tl *::before, .tl *::after { transition: none !important; animation: none !important; }
@@ -562,6 +556,21 @@
     var draft = /[?&]draft\b/.test(location.search);
     if (draft) { root.classList.add('draft'); }
     var DATA = {{ site.data.story | jsonify }};
+    // Straight apostrophes sit too high in the handwriting font; use the curly one (’)
+    // everywhere in the story's text, so '...' in story.yml can stay plain.
+    var curl = function (str) { return str.replace(/'/g, '\u2019'); };
+    (function fix(o) {
+      Object.keys(o).forEach(function (key) {
+        if (key === 'src' || key === 'pos' || key === 'fit' || key === 'layout') { return; }
+        if (typeof o[key] === 'string') { o[key] = curl(o[key]); }
+        else if (o[key] && typeof o[key] === 'object') { fix(o[key]); }
+      });
+    })(DATA);
+    // Narration and title are written into the page as HTML: fix their text, not their tags.
+    [].forEach.call(root.querySelectorAll('.tl-text p, .tl-diary-title'), function (el) {
+      var walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), n;
+      while ((n = walk.nextNode())) { n.nodeValue = curl(n.nodeValue); }
+    });
     var beats = DATA.beats || [];
     var stage = root.querySelector('.tl-stage');
     var line = root.querySelector('.tl-line');
@@ -573,8 +582,8 @@
     var next = root.querySelector('[data-go="1"]');
     var list = root.querySelector('.tl-stances');
 
-    // Animation speed: k scales every duration (k = 1 / speed). The viewer's pick is kept in
-    // this browser; the default comes from `speed` in _data/story.yml.
+    // Animation speed: k scales every duration (k = 1 / speed). Every visit starts at `speed`
+    // from _data/story.yml (1x); the buttons change it for the current visit only.
     var k = 1;
     var speedBtns = root.querySelectorAll('.tl-speed [data-speed]');
     function setSpeed(v) {
@@ -582,12 +591,9 @@
       k = v === 'off' ? 0 : 1 / v;
       root.style.setProperty('--k', k);
       speedBtns.forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-speed') === String(v)); });
-      try { localStorage.setItem('tl-speed', String(v)); } catch (e) {}
     }
-    var saved = null;
-    try { saved = localStorage.getItem('tl-speed'); } catch (e) {}
-    var offered = [].map.call(speedBtns, function (b) { return b.getAttribute('data-speed'); });
-    setSpeed(offered.indexOf(saved) >= 0 ? saved : (DATA.speed || 1));  // ignore picks no longer offered
+    setSpeed(DATA.speed || 1);
+    try { localStorage.removeItem('tl-speed'); } catch (e) {}  // clear picks saved by older versions
     speedBtns.forEach(function (b) {
       b.addEventListener('click', function (e) { e.stopPropagation(); setSpeed(b.getAttribute('data-speed')); });
     });
@@ -871,19 +877,22 @@
     // One element per item, across all beats, so each can travel from big box to pile.
     // Its photos fan out left to right, each card overlapping the last by STEP of a card.
     var STEP = 0.6;
-    var THUMB_GAP = 0.08;  // gap between thumbnails in a past item, as a fraction of a thumbnail
     // Fanned: each card overlaps the last, slightly tilted. Stacked: one above the other, no
     // overlap, no tilt (an item's pictures in the row of past beats).
-    function arrange(it, stacked) {
+    // In the past row an item's pictures become a little pile of prints: each one set a bit
+    // up and to the right of the one above it and slightly askew, the first picture on top.
+    var PILE = 0.14;  // offset per picture, as a fraction of a thumbnail
+    function arrange(it, piled) {
       var n = it.n;
       it.cards.forEach(function (card, k) {
-        if (stacked) {
-          var ch = 100 / (n + (n - 1) * THUMB_GAP);
-          card.style.left = '0';
-          card.style.width = '100%';
-          card.style.top = (k * ch * (1 + THUMB_GAP)) + '%';
-          card.style.height = ch + '%';
-          card.style.transform = 'none';
+        card.style.zIndex = piled ? String(n - k) : '';
+        if (piled) {
+          var span = 1 + (n - 1) * PILE;
+          card.style.width = (100 / span) + '%';
+          card.style.height = (100 / span) + '%';
+          card.style.left = (k * PILE / span * 100) + '%';
+          card.style.top = ((n - 1 - k) * PILE / span * 100) + '%';
+          card.style.transform = k ? 'rotate(' + (k % 2 ? 4 : -3) + 'deg)' : 'rotate(-1deg)';
         } else {
           var fw = 100 / (1 + (n - 1) * STEP);
           card.style.left = (k * STEP * fw) + '%';
@@ -964,6 +973,18 @@
     });
 
     var cur = -1;  // -1: nothing drawn yet; the first beat plays once the story is on screen
+    var lastReach = null;  // how far the line reached at the last layout (a year)
+
+    // When (as a fraction of its 1s run) the line's tip has covered `progress` of its growth,
+    // under the line's easing, cubic-bezier(0.3, 0.7, 0.2, 1).
+    function tipTime(progress) {
+      var bez = function (a, b, s) { return 3 * a * s * (1 - s) * (1 - s) + 3 * b * s * s * (1 - s) + s * s * s; };
+      for (var i = 0; i <= 100; i++) {
+        var s = i / 100;
+        if (bez(0.7, 1, s) >= progress) { return bez(0.3, 0.2, s); }
+      }
+      return 1;
+    }
 
     function place(el, x, y, w, h, extra) {
       el.style.left = x + 'px';
@@ -977,6 +998,11 @@
       var W = stage.clientWidth, H = stage.clientHeight;
       if (!W) { return; }  // hidden tab: lay out once it is shown
       var lineY = H - 48;
+      // Two layers: the timeline strip (past thumbnails stacked just above the line, at their
+      // dates) and, above it, the focus region for the open beat's cards and labels.
+      var stripH = 46;  // one thumbnail high, plus a pile's offsets
+      var stripTop = lineY - 12 - stripH;
+      var focusBottom = stripTop - 12;
       var b = Math.max(cur, 0);
       // The view spans every item shown so far, up to just past the line's reach.
       var shown = items.filter(function (it) { return it.beat <= b; });
@@ -995,17 +1021,33 @@
       head.style.top = (lineY - 1) + 'px';
       head.style.opacity = cur < 0 ? 0 : 1;
 
+      // A year appears as the growing line's tip passes it: its fade waits for the moment the
+      // tip (0.25s delay, 1s ease, as in .tl-line) reaches the year between the old and new
+      // reach. Years the line pulls back from disappear at once.
+      var from = lastReach === null ? v0 : lastReach;
       ticks.forEach(function (t) {
         t.el.style.left = x(t.year) + 'px';
         t.el.style.top = lineY + 'px';
-        t.el.style.opacity = (cur >= 0 && t.year <= reach && t.year >= v0) ? 1 : 0;
+        var on = cur >= 0 && t.year <= reach && t.year >= v0;
+        var wait = 0;
+        if (on && !t.shown && reach > from) {
+          wait = 0.25 + tipTime(Math.min(1, Math.max(0, (t.year - from) / (reach - from))));
+        }
+        t.el.style.transition = 'left ' + 0.8 * k + 's cubic-bezier(0.3, 0.7, 0.2, 1), opacity ' +
+          (on ? 0.3 : 0.15) * k + 's ease ' + wait * k + 's';
+        t.el.style.opacity = on ? 1 : 0;
+        t.shown = on;
       });
+      if (cur >= 0) { lastReach = reach; }
 
       // Open beat: items centered on their dates, pushed apart; if the row is too wide they
       // shrink a little, then overlap instead of shrinking further.
       var open = items.filter(function (it) { return it.beat === cur; }).sort(function (a, c) { return a.date - c.date; });
       var gap = 14, edge = 10;
-      var baseH = Math.min(150, W * 0.19);
+      var biggest = open.reduce(function (s, it) { return Math.max(s, it.size); }, 1);
+      // Every beat's cards fill the focus region (34px kept for labels), so the gap under the
+      // belief list stays the same from beat to beat; `size` is relative within the beat.
+      var baseH = (focusBottom - 40) / biggest;
       var widthAt = function (it, h) { return h * it.size * it.aspect * (1 + (it.n - 1) * STEP); };
       var total = open.reduce(function (s, it) { return s + widthAt(it, baseH); }, 0);
       var room = W - 2 * edge - gap * Math.max(0, open.length - 1);
@@ -1032,42 +1074,44 @@
       open.forEach(function (it) { it.x = Math.max(it.x, edge); });
       open.forEach(function (it, i) {
         arrange(it, false);
-        place(it.el, it.x, lineY - 30 - it.h, it.w, it.h, {
+        place(it.el, it.x, focusBottom - it.h, it.w, it.h, {
           opacity: 1, transform: 'none', transitionDelay: (0.75 + i * 0.18) * k + 's', zIndex: 3 + i
         });
         it.el.classList.remove('past');
       });
 
-      // Earlier beats: each item's pictures stack into a column of thumbnails, and each beat's
-      // items stand together near its dates. Nothing overlaps: the thumbnails shrink only as
-      // much as it takes for every past beat to fit left of the open row, and the columns
-      // never grow taller than the room under the stance list.
+      // Earlier beats live in the timeline strip: each item's pictures stack into a column of
+      // thumbnails, each beat's items stand together over its dates, and nothing overlaps (the
+      // thumbnails shrink only if every past beat would not otherwise fit across).
       var past = [];
       for (var bi = 0; bi < cur; bi++) {
         var group = items.filter(function (it) { return it.beat === bi; });
         if (group.length) { past.push(group); }
       }
-      var itemGap = 5, groupGap = 12;
-      var room = (open.length ? open[0].x - 14 : W - m1) - edge;
+      var itemGap = 5, groupGap = 10;
       var count = past.reduce(function (s, g) { return s + g.length; }, 0);
       var gaps = past.reduce(function (s, g) { return s + (g.length - 1) * itemGap; }, 0) + Math.max(0, past.length - 1) * groupGap;
       var tallest = past.reduce(function (s, g) { return Math.max(s, g.reduce(function (t, it) { return Math.max(t, it.n); }, 1)); }, 1);
-      var high = lineY - 22;  // room above the line
-      var tw = Math.min(72, W * 0.1, count ? (room - gaps) / count : 72, high / (tallest + (tallest - 1) * THUMB_GAP) / 0.75);
-      var th = tw * 0.75;
+      var grow = function (n) { return 1 + (n - 1) * PILE; };
+      var wide = past.reduce(function (s, g) { return s + g.reduce(function (t, it) { return t + grow(it.n); }, 0); }, 0);
+      var th = stripH / grow(tallest);
+      var tw = Math.min(60, th / 0.75, wide ? (W - m1 - edge - gaps) / wide : 60);
+      th = tw * 0.75;
       var spans = past.map(function (g) {
         var x0 = 0;
         var spots = g.map(function (it) {
-          var h = th * (it.n + (it.n - 1) * THUMB_GAP);
-          var spot = { it: it, dx: x0, h: h };
-          x0 += tw + itemGap;
+          var spot = { it: it, dx: x0, w: tw * grow(it.n), h: th * grow(it.n) };
+          x0 += spot.w + itemGap;
           return spot;
         });
         var mid = g.reduce(function (s, it) { return s + it.date; }, 0) / g.length;
         return { spots: spots, width: x0 - itemGap, x: x(mid) - (x0 - itemGap) / 2 };
       });
-      // Right to left: clear the open row and the next group; then left to right: stay on stage.
-      var limit = open.length ? open[0].x - 14 : W - m1;
+      // Left to right: push apart; right to left: stay inside the line; then the left edge.
+      for (var g1 = 1; g1 < spans.length; g1++) {
+        spans[g1].x = Math.max(spans[g1].x, spans[g1 - 1].x + spans[g1 - 1].width + groupGap);
+      }
+      var limit = W - m1;
       for (var g = spans.length - 1; g >= 0; g--) {
         spans[g].x = Math.min(spans[g].x, limit - spans[g].width);
         limit = spans[g].x - groupGap;
@@ -1080,7 +1124,7 @@
       spans.forEach(function (sp) {
         sp.spots.forEach(function (p) {
           arrange(p.it, true);
-          place(p.it.el, sp.x + p.dx, lineY - 14 - p.h, tw, p.h, {
+          place(p.it.el, sp.x + p.dx, lineY - 12 - p.h, p.w, p.h, {
             opacity: 1, transform: 'none', transitionDelay: '0s', zIndex: 1
           });
           p.it.el.classList.add('past');
@@ -1132,7 +1176,7 @@
       // same lines, so every handwritten line in the story sits on a rule.
       var most = parseFloat(list.style.minHeight) || 0;
       list.style.minHeight = Math.ceil(most / lh) * lh + 'px';
-      stage.style.height = Math.round((root.clientWidth < 640 ? 250 : 300) / lh) * lh + 'px';
+      stage.style.height = Math.round((root.clientWidth < 640 ? 265 : 320) / lh) * lh + 'px';
       textBox.style.setProperty('--line', lh + 'px');
       var top = list.getBoundingClientRect().top - root.getBoundingClientRect().top;
       root.style.setProperty('--rule', lh + 'px');
@@ -1143,18 +1187,36 @@
     // Clips play only while the story is on screen and only in the open beat; everything else
     // is paused so scrolling the page stays smooth.
     var onScreen = false;
+    function shouldPlay(v) {
+      var it = items.filter(function (x) { return x.el.contains(v); })[0];
+      return !!it && onScreen && it.beat === cur;
+    }
+    // Start a clip, and if the browser declines (some do until the clip has loaded, or until
+    // the visitor has interacted with the page), try again when it can play.
+    function startClip(v) {
+      v.muted = true;
+      var p = v.play();
+      if (p && p.catch) {
+        p.catch(function () {
+          v.addEventListener('canplay', function again() {
+            if (shouldPlay(v) && v.paused) { var q = v.play(); if (q && q.catch) { q.catch(function () {}); } }
+          }, { once: true });
+        });
+      }
+    }
     function playClips() {
       items.forEach(function (it) {
         it.el.querySelectorAll('video').forEach(function (v) {
-          if (onScreen && it.beat === cur) {
-            var p = v.play();
-            if (p && p.catch) { p.catch(function () {}); }
-          } else {
-            v.pause();
-          }
+          if (onScreen && it.beat === cur) { startClip(v); } else { v.pause(); }
         });
       });
     }
+    // A first click, tap or key press anywhere unlocks playback in the strictest browsers.
+    ['pointerdown', 'keydown', 'touchstart'].forEach(function (type) {
+      document.addEventListener(type, function () {
+        root.querySelectorAll('video').forEach(function (v) { if (shouldPlay(v) && v.paused) { startClip(v); } });
+      }, { passive: true, capture: true });
+    });
 
     function go(i, instant) {
       if (i < 0 || i >= beats.length || (i === cur && !instant)) { return; }

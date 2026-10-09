@@ -87,7 +87,7 @@ beats:
             fit: contain
 
   - reach: 2023.6
-    text: "Starting my PhD, I immediately got hands-on with a <u>decked out</u> off-road robot with data-driven vision."
+    text: "Starting my PhD, I dove in with a <u>decked out</u> high-speed, off-road robot (4 GPUs + 3 LiDARs + 4 RGB-D ... and a Chlorophyll camera? all while 30+ mph)."
     stances: ["Perception, planning, and control can take you really far"]
     crossouts: []
     items:
@@ -104,9 +104,11 @@ beats:
             pos: right bottom
 
   - reach: 2024.6
-    text: "All the standard control and systems engineering issues persisted, now with a bit of ML-flavoring. <u>The world is too big to be surprised by failure.</u>"
+    text: "All the standard control and systems engineering issues persisted, now with a bit of ML-flavoring. <u>The world is too big to not expect failure.</u>"
     stances: ["Robots should continually learn: from humans and end-to-end"]
-    crossouts: []
+    edits: [
+      {stance: 1, word: "the field", write: "deployment"},
+    ]
     items:
       # Keep the bottom-right corner: it carries the public-release statement.
       - label: R:SS 2024
@@ -167,11 +169,10 @@ beats:
             fit: contain
 
   - reach: 2026.7
-    text: "Finally, I'm seeing a way for robots to adapt during deployment without extensive engineering. Can I scale this up?"
+    text: "Finally, I'm seeing a way forward for robots to adapt during deployment without extensive engineering. Can I scale this up?"
     stances: []
     crossouts: []
     edits: [
-      {stance: 1, word: "the field", write: "deployment"},
       {stance: 4, word: "from", write: "by observing"},
     ]
     items:
