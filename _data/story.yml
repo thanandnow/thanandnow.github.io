@@ -81,7 +81,7 @@ beats:
     crossouts: []
     items:
       - label: NRL
-        date: 2022.0
+        date: 2021.0
         images:
           - src: /images/story/nrl-koopman.png
             fit: contain
@@ -169,7 +169,7 @@ beats:
             fit: contain
 
   - reach: 2026.7
-    text: "Finally, I'm seeing a way forward for robots to adapt during deployment without extensive engineering. Can I scale this up?"
+    text: "Finally, I'm seeing a way forward for robots to adapt during deployment without extensive engineering. Can this scale up?"
     stances: []
     crossouts: []
     edits: [

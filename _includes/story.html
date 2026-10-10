@@ -482,9 +482,41 @@
     color: var(--ink);
     transition: color calc(0.4s * var(--k, 1)) ease;
   }
+  /* Eraser marks behind revived text: a light, blurred graphite smudge with a few angled
+     rub streaks and a ghost of the red strike that was rubbed out. */
+  .tl-seg::before,
+  .tl-stances li .tl-s-text::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 8%;
+    bottom: 4%;
+    left: -5px;
+    right: -5px;
+    border-radius: 45% 55% 50% 40% / 60% 50% 55% 45%;
+    background:
+      linear-gradient(-1deg, transparent 40%, rgba(196, 70, 44, 0.2) 49%, rgba(196, 70, 44, 0.12) 55%, transparent 63%),
+      repeating-linear-gradient(112deg, rgba(105, 105, 105, 0.16) 0 2px, transparent 2px 5px, rgba(105, 105, 105, 0.09) 5px 9px, transparent 9px 13px),
+      radial-gradient(ellipse 60% 70% at 35% 55%, rgba(125, 125, 125, 0.16), transparent 72%),
+      radial-gradient(ellipse 55% 65% at 70% 50%, rgba(125, 125, 125, 0.13), transparent 72%);
+    filter: blur(0.7px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity calc(0.5s * var(--k, 1)) ease;
+  }
+  .tl-seg.revived::before,
+  .tl-stances li.revived .tl-s-text::before {
+    opacity: 0.95;
+  }
+  .tl-stances li.revived .tl-s-text {
+    position: relative;
+    z-index: 0;
+  }
 
   .tl-stances.instant .tl-seg,
-  .tl-stances.instant .tl-seg::after {
+  .tl-stances.instant .tl-seg::after,
+  .tl-stances.instant .tl-seg::before,
+  .tl-stances.instant .tl-s-text::before {
     transition: none;
   }
   /* A note written beside a crossout, in the strike's red. */

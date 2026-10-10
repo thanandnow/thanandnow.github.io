@@ -13,6 +13,16 @@
 # Entries appear in the order listed here. Copy a block to add a new one.
 # =============================================================================
 
+- project: "Principled Robot Learning (under construction)"
+  role: "Course"
+  image: /images/macrl2-wheel.gif
+  description: |
+    A course on robot learning from members of the Robot Learning Lab at UW that aims to provide students with a mental model for grounding the fast-moving world of robotics
+    using first principles from systems engineering to machine learning.
+  links:
+    # - title: preview
+      # url: https://macrl2.github.io/
+
 - project: "Low-cost Terrain Navigation for Education in End-to-End Robotics"
   mentee: "Laura Wang, Caleb Hsu, Byron Boots, Tyler Han"
   role: "CSE 494 capstone project, University of Washington, 2026"
@@ -23,17 +33,17 @@
     - title: poster
       url: /pdfs/depth-elev.pdf
 
-- project: "Wheeled Lab"
+- project: "WL @ UW"
   role: "University of Washington, February 2025 - present"
-  image: /images/wl-teaser.gif
+  image: /images/story/wheeled-lab-education.jpg
   stars: UWRobotLearning/WheeledLab
   description: |
     Created an open-source education platform and content for students new to reinforcement
     learning in robotics, and advise undergraduate teams beginning in robotics by
-    mentoring extracurricular Sim2Real projects.
+    mentoring extracurricular Sim2Real projects. Student organization under development.
     <br><br>
     If you're interested in RL and robotics but don't know where to start, consider starting with us!
-    There are currently 8 students with self-driven Sim2Real projects spanning pre-trained encoders, Real2Sim, depth-based Sim2Real, high-performance visual racing, and more!
+    Students begin with self-driven Sim2Real projects spanning pre-trained encoders, Real2Sim, depth-based Sim2Real, high-performance visual racing, and more.
   links:
-    - title: website
-      url: https://uwrobotlearning.github.io/WheeledLab/
+    - title: student org
+      url: https://uwrobotlearning.github.io/WheeledLab/wlatuw.html
